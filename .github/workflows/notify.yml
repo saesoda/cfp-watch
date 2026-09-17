@@ -1,0 +1,37 @@
+name: cfp-watch notify
+
+on:
+  push:
+    branches: [main]
+    paths: ["data/last_delta.json"]
+  workflow_dispatch:
+    inputs:
+      force_email:
+        description: "send the digest even if nothing changed"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: send digest
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+          FORCE_EMAIL: ${{ inputs.force_email }}
+        run: |
+          ARGS=()
+          if [ "$FORCE_EMAIL" = "true" ]; then ARGS+=(--force-email); fi
+          python -m cfpwatch notify-last "${ARGS[@]}"
