@@ -56,3 +56,16 @@ def test_email_includes_deadlines_within_30_days_and_changed():
     assert subject == "cfp-watch: 1 deadline changed"
     assert "2026-09-30" in html and "Deadlines within 30 days" in html and "Soon Call" in html
     assert "Later Call" not in html.split("Deadlines within 30 days")[1]
+
+
+def test_dashboard_renders_missing_fields_and_blocks_unsafe_url():
+    s = Store()
+    bad = Call(journal="os", title="Odd Call", guest_editors=[], opens=None, deadline=None, deadline_text=None,
+               url="javascript:alert(1)", source_url="https://s", summary="", confidence="low",
+               first_seen=TODAY.isoformat(), last_seen=TODAY.isoformat())
+    delta = merge(s, "os", [bad], TODAY)
+    html = render_dashboard(s, delta, META)
+    assert "javascript:" not in html and 'href="#"' in html
+    assert html.count("—") >= 2  # deadline and guest editors placeholders
+    _, email = render_email(s, delta, META)
+    assert "javascript:" not in email

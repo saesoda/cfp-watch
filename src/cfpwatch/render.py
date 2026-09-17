@@ -37,6 +37,11 @@ def _abbrev(meta: RunMeta, key: str) -> str:
     return (j.aliases[0] if j and j.aliases else key.upper())
 
 
+def _safe_url(url: str) -> str:
+    u = (url or "").strip()
+    return u if u.lower().startswith(("http://", "https://")) else "#"
+
+
 def _deadline_cell(c: Call) -> str:
     if c.deadline:
         return escape(c.deadline)
@@ -48,7 +53,7 @@ def _row(c: Call, meta: RunMeta, new_ids: set[str]) -> str:
     eds = escape(", ".join(c.guest_editors)) or "—"
     return (
         f"<tr><td>{escape(_abbrev(meta, c.journal))}</td>"
-        f'<td><a href="{escape(c.url, quote=True)}">{escape(c.title)}</a>{badge}'
+        f'<td><a href="{escape(_safe_url(c.url), quote=True)}">{escape(c.title)}</a>{badge}'
         f'<div class="muted">{escape(c.summary)}</div></td>'
         f"<td>{_deadline_cell(c)}</td><td>{eds}</td><td>{escape(c.confidence)}</td></tr>"
     )
@@ -108,7 +113,7 @@ def render_dashboard(store: Store, delta: Delta, meta: RunMeta) -> str:
 def _email_list(calls: list[Call], meta: RunMeta, extra=None) -> str:
     items = []
     for c in calls:
-        line = (f'<li><b>{escape(_abbrev(meta, c.journal))}</b> · <a href="{escape(c.url, quote=True)}">{escape(c.title)}</a>'
+        line = (f'<li><b>{escape(_abbrev(meta, c.journal))}</b> · <a href="{escape(_safe_url(c.url), quote=True)}">{escape(c.title)}</a>'
                 f" · deadline {_deadline_cell(c)}")
         if extra:
             line += f" {extra(c)}"
