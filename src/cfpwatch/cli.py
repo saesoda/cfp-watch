@@ -15,7 +15,7 @@ from .models import Delta
 from .notify import send_email
 from .render import RunMeta, render_dashboard, render_email
 from .search import DEFAULT_MODEL, find_calls
-from .store import Store, merge, record_error
+from .store import Store, expire_all, merge, record_error
 
 DEFAULT_DASHBOARD_URL = "https://saesoda.github.io/cfp-watch/"
 
@@ -60,14 +60,20 @@ def run_once(
     journals = load_journals(paths.config)
     if opts.journals:
         wanted = set(opts.journals)
+        unknown = wanted - {j.key for j in journals}
+        if unknown:
+            print(f"warning: unknown journal keys: {sorted(unknown)}")
         journals = [j for j in journals if j.key in wanted]
     store = Store.load(paths.store)
     total = Delta(new=[], changed=[], expired=[], errors={})
+    in_total = out_total = 0
 
     for j in journals:
         evidence = [t for t in (fetcher(u) for u in j.direct_urls) if t]
         print(f"[{j.key}] searching (evidence pages: {len(evidence)})", flush=True)
         res = searcher(client, j, today, evidence, opts.model, opts.max_searches)
+        in_total += res.input_tokens
+        out_total += res.output_tokens
         if res.error:
             print(f"[{j.key}] ERROR {res.error}", flush=True)
             record_error(store, j.key, res.error, today)
@@ -81,6 +87,9 @@ def run_once(
         total.new += d.new
         total.changed += d.changed
         total.expired += d.expired
+
+    print(f"tokens total: {in_total}/{out_total}")
+    total.expired += expire_all(store, today)
 
     meta = RunMeta(today=today, model=opts.model,
                    dashboard_url=env.get("CFPWATCH_DASHBOARD_URL", DEFAULT_DASHBOARD_URL),
@@ -100,8 +109,7 @@ def run_once(
         return total
     user, pw = env.get("GMAIL_USER"), env.get("GMAIL_APP_PASSWORD")
     if not user or not pw:
-        print("email skipped: GMAIL_USER / GMAIL_APP_PASSWORD not set")
-        return total
+        raise RuntimeError("email due but GMAIL_USER / GMAIL_APP_PASSWORD not set")
     sender(subject, html, user, pw, env.get("DIGEST_TO") or None)
     print(f"email sent: {subject}")
     return total
@@ -119,7 +127,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("render", help="rebuild the dashboard from the store without searching")
     args = ap.parse_args(argv)
 
-    paths = Paths(root=Path(__file__).resolve().parents[2])
+    paths = Paths(root=Path(os.environ.get("CFPWATCH_ROOT") or Path(__file__).resolve().parents[2]))
     today = dt.date.today()
     model = os.environ.get("CFPWATCH_MODEL") or DEFAULT_MODEL  # empty env var means default
 
@@ -128,6 +136,7 @@ def main(argv: list[str] | None = None) -> int:
         meta = RunMeta(today=today, model=model,
                        dashboard_url=os.environ.get("CFPWATCH_DASHBOARD_URL", DEFAULT_DASHBOARD_URL),
                        journals=load_journals(paths.config))
+        paths.dashboard.parent.mkdir(parents=True, exist_ok=True)
         paths.dashboard.write_text(render_dashboard(store, Delta([], [], [], {}), meta), encoding="utf-8")
         print(f"wrote {paths.dashboard}")
         return 0

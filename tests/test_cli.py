@@ -2,6 +2,8 @@ import datetime as dt
 import json
 from pathlib import Path
 
+import pytest
+
 from cfpwatch.cli import Paths, RunOptions, run_once
 from cfpwatch.models import Call
 from cfpwatch.search import SearchResult
@@ -99,16 +101,47 @@ def test_run_once_dry_run_writes_nothing_and_sends_nothing(tmp_path):
     assert not paths.store.exists() and not paths.dashboard.exists() and sent == []
 
 
-def test_run_once_skips_email_without_credentials(tmp_path, capsys):
+def test_run_once_raises_when_email_due_without_credentials(tmp_path):
     paths = _paths(tmp_path)
     searcher = _searcher({"os": SearchResult(calls=[_call("os", "Digital Strategy")])})
 
     def must_not_send(*a, **k):
         raise AssertionError("should not send")
 
-    run_once(RunOptions(journals=["os"]), paths, client=object(), today=TODAY,
-             sender=must_not_send, fetcher=lambda url: None, searcher=searcher, env={})
-    assert "GMAIL_USER" in capsys.readouterr().out
+    with pytest.raises(RuntimeError, match="GMAIL_USER"):
+        run_once(RunOptions(journals=["os"]), paths, client=object(), today=TODAY,
+                 sender=must_not_send, fetcher=lambda url: None, searcher=searcher, env={})
+    assert paths.store.exists()
+    assert paths.dashboard.exists()
+
+
+def test_run_once_prints_token_totals(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    searcher = _searcher({
+        "os": SearchResult(calls=[_call("os", "Digital Strategy")], input_tokens=100, output_tokens=20),
+        "smj": SearchResult(input_tokens=50, output_tokens=5),
+    })
+    run_once(RunOptions(journals=["os", "smj"], no_email=True), paths, client=object(), today=TODAY,
+             fetcher=lambda url: None, searcher=searcher, env={})
+    out = capsys.readouterr().out
+    assert "tokens total: 150/25" in out
+
+
+def test_run_once_warns_on_unknown_journal_keys(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    run_once(RunOptions(journals=["os", "nope"], no_email=True), paths, client=object(), today=TODAY,
+             fetcher=lambda url: None, searcher=_searcher({}), env={})
+    assert "warning: unknown journal keys: ['nope']" in capsys.readouterr().out
+
+
+def test_main_render_creates_dashboard_via_cfpwatch_root_env(tmp_path, monkeypatch):
+    from cfpwatch import cli
+
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "journals.yaml").write_text((ROOT / "config" / "journals.yaml").read_text())
+    monkeypatch.setenv("CFPWATCH_ROOT", str(tmp_path))
+    assert cli.main(["render"]) == 0
+    assert (tmp_path / "docs" / "index.html").exists()
 
 
 def test_main_treats_empty_model_env_as_default(monkeypatch):
