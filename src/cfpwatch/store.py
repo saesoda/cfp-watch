@@ -130,6 +130,32 @@ def record_error(store: Store, journal_key: str, error: str, today: dt.date) -> 
     st.last_error = error[:500]
 
 
+def write_last_delta(path: Path, delta: Delta, today: dt.date) -> None:
+    data = {
+        "date": today.isoformat(),
+        "new": [c.id for c in delta.new],
+        "changed": [[c.id, old] for c, old in delta.changed],
+        "expired": [c.id for c in delta.expired],
+        "errors": dict(delta.errors),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def read_last_delta(path: Path, store: Store) -> tuple[Delta, dt.date] | None:
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text(encoding="utf-8"))
+    new = [store.calls[i] for i in data.get("new", []) if i in store.calls]
+    changed = [(store.calls[i], old) for i, old in data.get("changed", []) if i in store.calls]
+    expired = [store.calls[i] for i in data.get("expired", []) if i in store.calls]
+    errors = dict(data.get("errors", {}))
+    delta = Delta(new=new, changed=changed, expired=expired, errors=errors)
+    return delta, dt.date.fromisoformat(data["date"])
+
+
 def expire_all(store: Store, today: dt.date) -> list[Call]:
     expired = []
     for c in store.calls.values():

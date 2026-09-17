@@ -3,8 +3,8 @@ import json
 
 import pytest
 
-from cfpwatch.models import Call
-from cfpwatch.store import Store, expire_all, merge, record_error
+from cfpwatch.models import Call, Delta
+from cfpwatch.store import Store, expire_all, merge, read_last_delta, record_error, write_last_delta
 
 TODAY = dt.date(2026, 9, 22)
 
@@ -179,3 +179,56 @@ def test_load_corrupt_file_raises_value_error(tmp_path):
     p.write_text("{not valid json", encoding="utf-8")
     with pytest.raises(ValueError, match="corrupt store"):
         Store.load(p)
+
+
+def test_write_and_read_last_delta_roundtrip(tmp_path):
+    s = Store()
+    merge(s, "os", [_found("Digital Strategy", "2027-01-01")], TODAY)
+    merge(s, "smj", [_found("Changed Deadline", "2027-02-01", journal="smj")], TODAY)
+    merge(s, "smj", [_found("Old Expiring", "2026-09-01", journal="smj")], TODAY)
+    new_call = next(c for c in s.calls.values() if c.title == "Digital Strategy")
+    changed_call = next(c for c in s.calls.values() if c.title == "Changed Deadline")
+    expired_call = next(c for c in s.calls.values() if c.title == "Old Expiring")
+    delta = Delta(new=[new_call], changed=[(changed_call, "2027-01-15")], expired=[expired_call],
+                  errors={"jms": "ingest: boom"})
+    p = tmp_path / "last_delta.json"
+    write_last_delta(p, delta, TODAY)
+
+    data = json.loads(p.read_text())
+    assert data["date"] == TODAY.isoformat()
+    assert data["new"] == [new_call.id]
+    assert data["changed"] == [[changed_call.id, "2027-01-15"]]
+    assert data["expired"] == [expired_call.id]
+    assert data["errors"] == {"jms": "ingest: boom"}
+
+    result = read_last_delta(p, s)
+    assert result is not None
+    read_delta, read_date = result
+    assert read_date == TODAY
+    assert [c.id for c in read_delta.new] == [new_call.id]
+    assert [(c.id, old) for c, old in read_delta.changed] == [(changed_call.id, "2027-01-15")]
+    assert [c.id for c in read_delta.expired] == [expired_call.id]
+    assert read_delta.errors == {"jms": "ingest: boom"}
+
+
+def test_read_last_delta_missing_file_returns_none(tmp_path):
+    assert read_last_delta(tmp_path / "nope.json", Store()) is None
+
+
+def test_read_last_delta_skips_unknown_ids(tmp_path):
+    s = Store()
+    merge(s, "os", [_found("Digital Strategy")], TODAY)
+    known = next(iter(s.calls.values()))
+    p = tmp_path / "last_delta.json"
+    p.write_text(json.dumps({
+        "date": TODAY.isoformat(),
+        "new": [known.id, "os:deadbeef"],
+        "changed": [["smj:ffffffff", "2027-01-01"]],
+        "expired": ["amj:00000000"],
+        "errors": {},
+    }), encoding="utf-8")
+    read_delta, read_date = read_last_delta(p, s)
+    assert [c.id for c in read_delta.new] == [known.id]
+    assert read_delta.changed == []
+    assert read_delta.expired == []
+    assert read_date == TODAY
