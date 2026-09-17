@@ -36,7 +36,7 @@ requirement.
 | Extraction | Claude API with server-side web search, structured JSON output |
 | Email | Gmail SMTP with an app password, sent to self |
 | Repo | Public GitHub repo `saesoda/cfp-watch`; dashboard on GitHub Pages |
-| Email policy | Send only when there are new calls, changed deadlines, or journal errors |
+| Email policy | Send only when there are new calls, changed deadlines, or journal errors (confirmed) |
 | Language | Python 3.12, official `anthropic` SDK |
 
 ## 4. Architecture
@@ -90,8 +90,8 @@ robot", "Client Challenge", "Access Denied"). Strips HTML to text, caps at
 
 One `client.messages.parse()` call per journal:
 
-- Model: `claude-opus-5` by default (`CFPWATCH_MODEL` env var overrides,
-  e.g. `claude-sonnet-5` to cut cost). Adaptive thinking on.
+- Model: `claude-sonnet-5` by default (`CFPWATCH_MODEL` env var overrides,
+  e.g. `claude-opus-5` for stronger reasoning). Adaptive thinking on.
 - Tools: `web_search_20260209` with `max_uses` = 5 (configurable). Optionally
   `web_fetch_20260209` with `max_uses` = 3, so the model can read an open PDF
   or society page it found. Fetch failures are expected and harmless.
@@ -130,7 +130,7 @@ One `client.messages.parse()` call per journal:
 Returns `SearchResult(calls, notes, usage, error=None)`. Any SDK error is
 caught inside `find_calls` and returned as `error=str(e)`; it never propagates.
 Refusal stop reason is treated as an error. `fallbacks="default"` with the
-server-side fallback beta is enabled so a refusal on Opus 5 reroutes rather
+server-side fallback beta is enabled so a refusal reroutes rather
 than fails.
 
 ### 5.4 `store.py`
@@ -240,12 +240,12 @@ then a full `run --force-email` to confirm SMTP and Pages.
 
 ## 8. Cost
 
-Per run: 12 Claude calls. With `claude-opus-5`, roughly 20–40k input tokens
-(search results) and ~2k output per journal → about $2–3 in tokens, plus up to
-60 web searches at $10 per 1,000 → $0.60. Estimate **$3–4 per weekly run,
-$12–16 per month**. Setting `CFPWATCH_MODEL=claude-sonnet-5` cuts tokens to
-about $1 per run (**$5–7 per month**). The model is a config knob, not a code
-change.
+Per run: 12 Claude calls. With `claude-sonnet-5` (default), roughly 20–40k
+input tokens (search results) and ~2k output per journal → about $1 in
+tokens, plus up to 60 web searches at $10 per 1,000 → $0.60. Estimate
+**$1–2 per weekly run, $5–7 per month**. Setting
+`CFPWATCH_MODEL=claude-opus-5` raises tokens to about $2–3 per run
+(**$12–16 per month**). The model is a config knob, not a code change.
 
 ## 9. Out of scope (deferred)
 
