@@ -13,7 +13,15 @@ separate GitHub Actions job) the emailing.
 
 ```bash
 pip install -e .
+rm -f data/found/*.json
 ```
+
+The `rm -f` is not optional: `data/found/` must contain only files this
+run writes. A leftover `<key>.json` from a previous run (e.g. a journal
+you skipped last time) will otherwise get committed and re-ingested as if
+it were fresh coverage for a journal you never actually searched this
+run — silently hiding a skipped journal instead of surfacing it as "no
+file for: `<key>`".
 
 Read `config/journals.yaml` to get the list of journals. Each entry has a
 `key` (e.g. `os`, `smj`), `name`, `aliases`, `publisher`, `direct_urls`, and
