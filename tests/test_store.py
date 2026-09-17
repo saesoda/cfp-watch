@@ -1,8 +1,10 @@
 import datetime as dt
 import json
 
+import pytest
+
 from cfpwatch.models import Call
-from cfpwatch.store import Store, merge, record_error
+from cfpwatch.store import Store, expire_all, merge, record_error
 
 TODAY = dt.date(2026, 9, 22)
 
@@ -92,6 +94,27 @@ def test_merge_fuzzy_duplicate_is_same_call():
     assert not d.new and len(s.calls) == 1
 
 
+def test_merge_fuzzy_near_duplicate_via_token_sort_ratio_is_still_distinct_call():
+    s = Store()
+    merge(s, "os", [_found("Digital Strategy")], TODAY)
+    d = merge(s, "os", [_found("Digital Strategy in Emerging Markets")], TODAY)
+    assert len(s.calls) == 2
+    assert len(d.new) == 1
+
+
+def test_merge_reopens_expired_call_seen_again_with_later_deadline():
+    s = Store()
+    merge(s, "os", [_found("Old Call", "2026-09-01")], TODAY - dt.timedelta(days=60))
+    merge(s, "os", [], TODAY)
+    c = next(iter(s.calls.values()))
+    assert c.status == "expired"
+    d = merge(s, "os", [_found("Old Call", "2027-06-01")], TODAY)
+    c = next(iter(s.calls.values()))
+    assert c.status == "open"
+    assert c.id in {x.id for x in d.new}
+    assert c.id in {x.id for x in s.open_calls(TODAY)}
+
+
 def test_merge_only_touches_its_own_journal():
     s = Store()
     merge(s, "smj", [_found("SMJ Call", journal="smj")], TODAY)
@@ -113,3 +136,46 @@ def test_open_calls_sorted_deadline_then_none_last():
     s = Store()
     merge(s, "os", [_found("B", "2027-03-01"), _found("A", "2027-01-01"), _found("C", None)], TODAY)
     assert [c.title for c in s.open_calls(TODAY)] == ["A", "B", "C"]
+
+
+def test_open_calls_excludes_past_deadline_even_if_status_still_open():
+    s = Store()
+    merge(s, "os", [_found("Soon", "2026-09-25")], TODAY)
+    later = TODAY + dt.timedelta(days=10)
+    assert next(iter(s.calls.values())).status == "open"
+    assert s.open_calls(later) == []
+
+
+def test_expire_all_marks_open_past_deadline_calls_across_journals():
+    s = Store()
+    merge(s, "os", [_found("OS Call", "2026-09-25")], TODAY)
+    merge(s, "smj", [_found("SMJ Call", "2026-09-25", journal="smj")], TODAY)
+    later = TODAY + dt.timedelta(days=10)
+    expired = expire_all(s, later)
+    assert {c.title for c in expired} == {"OS Call", "SMJ Call"}
+    assert all(c.status == "expired" for c in s.calls.values())
+
+
+def test_expire_all_does_not_touch_already_expired_or_future_calls():
+    s = Store()
+    merge(s, "os", [_found("Future", "2027-01-01")], TODAY)
+    merge(s, "os", [_found("Old Call", "2026-09-01")], TODAY - dt.timedelta(days=60))
+    merge(s, "os", [_found("Future")], TODAY)  # expires "Old Call"
+    expired = expire_all(s, TODAY)
+    assert expired == []
+
+
+def test_journal_recovers_after_error():
+    s = Store()
+    record_error(s, "os", "boom", TODAY)
+    merge(s, "os", [_found("Digital Strategy")], TODAY + dt.timedelta(days=7))
+    st = s.journals["os"]
+    assert st.last_error is None
+    assert st.last_ok == (TODAY + dt.timedelta(days=7)).isoformat()
+
+
+def test_load_corrupt_file_raises_value_error(tmp_path):
+    p = tmp_path / "calls.json"
+    p.write_text("{not valid json", encoding="utf-8")
+    with pytest.raises(ValueError, match="corrupt store"):
+        Store.load(p)

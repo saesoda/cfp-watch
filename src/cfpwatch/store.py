@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -22,7 +23,11 @@ class Store:
     def load(cls, path: Path) -> "Store":
         if not path.exists():
             return cls()
-        data = json.loads(path.read_text(encoding="utf-8"))
+        raw = path.read_text(encoding="utf-8")
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"corrupt store {path}: {e}") from e
         calls = {c["id"]: Call.from_dict(c) for c in data.get("calls", [])}
         journals = {k: JournalStatus(**v) for k, v in data.get("journals", {}).items()}
         return cls(calls=calls, journals=journals)
@@ -33,14 +38,22 @@ class Store:
             "calls": [c.to_dict() for c in sorted(self.calls.values(), key=lambda c: c.id)],
             "journals": {k: asdict(v) for k, v in sorted(self.journals.items())},
         }
-        path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        os.replace(tmp, path)
 
     def open_calls(self, today: dt.date) -> list[Call]:
         def key(c: Call):
             d = parse_date(c.deadline)
             return (d is None, d or dt.date.max, c.journal, c.title)
 
-        return sorted((c for c in self.calls.values() if c.status == "open"), key=key)
+        def is_open(c: Call) -> bool:
+            if c.status != "open":
+                return False
+            d = parse_date(c.deadline)
+            return d is None or d >= today
+
+        return sorted((c for c in self.calls.values() if is_open(c)), key=key)
 
 
 def _match_existing(store: Store, journal_key: str, found: Call) -> Call | None:
@@ -51,7 +64,7 @@ def _match_existing(store: Store, journal_key: str, found: Call) -> Call | None:
     for c in store.calls.values():
         if c.journal != journal_key:
             continue
-        score = fuzz.token_set_ratio(norm, normalize_title(c.title))
+        score = fuzz.token_sort_ratio(norm, normalize_title(c.title))
         if score > best_score:
             best, best_score = c, score
     return best if best_score >= FUZZY_THRESHOLD else None
@@ -75,6 +88,7 @@ def merge(store: Store, journal_key: str, found: list[Call], today: dt.date) -> 
             seen_ids.add(f.id)
             continue
         old_deadline = existing.deadline
+        old_status = existing.status
         if f.deadline and f.deadline != existing.deadline:
             existing.deadline = f.deadline
             delta.changed.append((existing, old_deadline))
@@ -84,8 +98,11 @@ def merge(store: Store, journal_key: str, found: list[Call], today: dt.date) -> 
                 setattr(existing, attr, val)
         existing.last_seen = ts
         existing.misses = 0
-        if existing.status == "stale":
+        d = parse_date(existing.deadline)
+        if d is None or d >= today:
             existing.status = "open"
+        if old_status == "expired" and existing.status == "open":
+            delta.new.append(existing)
         seen_ids.add(existing.id)
 
     for c in store.calls.values():
@@ -111,3 +128,15 @@ def record_error(store: Store, journal_key: str, error: str, today: dt.date) -> 
     st = store.journals.setdefault(journal_key, JournalStatus())
     st.last_run = today.isoformat()
     st.last_error = error[:500]
+
+
+def expire_all(store: Store, today: dt.date) -> list[Call]:
+    expired = []
+    for c in store.calls.values():
+        if c.status != "open":
+            continue
+        d = parse_date(c.deadline)
+        if d is not None and d < today:
+            c.status = "expired"
+            expired.append(c)
+    return expired

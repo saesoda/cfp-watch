@@ -9,6 +9,13 @@ def test_normalize_title_strips_prefix_punctuation_case():
     assert normalize_title("Call for Papers - Digital Strategy") == "digital strategy"
 
 
+def test_normalize_title_strips_trailing_suffix():
+    assert normalize_title("Digital Strategy: Special Issue") == "digital strategy"
+    assert normalize_title("Digital Strategy - Call for Papers") == "digital strategy"
+    assert normalize_title("Digital Strategy CFP") == "digital strategy"
+    assert normalize_title("Digital Strategy — Special Issue") == "digital strategy"
+
+
 def test_call_id_is_journal_plus_8_hex():
     cid = call_id("os", "Special Issue on Digital Strategy")
     assert cid.startswith("os:")

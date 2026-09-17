@@ -11,11 +11,17 @@ _PREFIX = re.compile(
     re.I,
 )
 
+_SUFFIX = re.compile(
+    r"\s*(:|-|–|—)?\s*(special issue|call for papers|cfp)\s*$",
+    re.I,
+)
+
 
 def normalize_title(title: str) -> str:
     t = title.strip().lower()
     t = _PREFIX.sub("", t)
     t = _PREFIX.sub("", t)  # handle "call for papers - special issue on X"
+    t = _SUFFIX.sub("", t)
     t = re.sub(r"[^\w\s]", " ", t)
     return re.sub(r"\s+", " ", t).strip()
 
