@@ -34,6 +34,7 @@ class _Resp(io.BytesIO):
         return self
 
     def __exit__(self, *a):
+        self.close()
         return False
 
 
