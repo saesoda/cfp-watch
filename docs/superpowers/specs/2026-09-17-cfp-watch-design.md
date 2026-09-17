@@ -32,7 +32,7 @@ requirement.
 | Decision | Choice |
 |---|---|
 | Delivery | Email digest + dashboard web page |
-| Runtime | GitHub Actions, weekly cron + manual trigger |
+| Runtime | Claude Code cloud routine (weekly) + push-triggered GitHub Actions notify job — see §11 |
 | Extraction | Claude API with server-side web search, structured JSON output |
 | Email | Gmail SMTP with an app password, sent to self |
 | Repo | Public GitHub repo `saesoda/cfp-watch`; dashboard on GitHub Pages |
@@ -269,10 +269,12 @@ cfp_watch/
   config/journals.yaml
   src/cfpwatch/{__init__,__main__,cli,fetch,search,store,render,notify,models}.py
   tests/{fixtures/,test_fetch,test_store,test_render,test_search}.py
+  scripts/routine.md
   data/calls.json
+  data/found/
   docs/index.html
   docs/superpowers/specs/2026-09-17-cfp-watch-design.md
-  .github/workflows/weekly.yml
+  .github/workflows/notify.yml
 ```
 
 ## 11. Zero-API-cost revision (2026-09-17)

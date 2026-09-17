@@ -185,7 +185,10 @@ def ingest_once(
                     _fill_call_defaults(c) if isinstance(c, dict) else c for c in raw["calls"]
                 ]
             parsed = SearchOutput.model_validate(raw)
-        except Exception as e:
+        except (OSError, ValueError) as e:
+            # Covers file-read errors (OSError), json.loads's
+            # JSONDecodeError, and pydantic's ValidationError — all three
+            # are ValueError subclasses.
             err = f"ingest: {e}"[:500]
             print(f"[{key}] ERROR {err}", flush=True)
             record_error(store, key, err, today)
@@ -279,7 +282,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.cmd == "ingest":
-        opts = RunOptions(dry_run=args.dry_run, no_email=args.no_email, force_email=args.force_email, model=model)
+        # "routine", not CFPWATCH_MODEL/DEFAULT_MODEL: ingest never calls an
+        # API model, so the dashboard/email footer shouldn't name one.
+        opts = RunOptions(dry_run=args.dry_run, no_email=args.no_email, force_email=args.force_email,
+                          model="routine")
         ingest_once(opts, paths, Path(args.path), today)
         return 0
 

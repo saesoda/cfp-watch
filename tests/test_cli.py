@@ -405,5 +405,8 @@ def test_main_ingest_and_notify_last_work_via_cfpwatch_root_env(tmp_path, monkey
 
     assert cli.main(["ingest", str(source), "--no-email"]) == 0
     assert (tmp_path / "data" / "last_delta.json").exists()
+    # The dashboard footer names the model that produced it; ingest never
+    # calls an API model, so it should say "routine", not claude-sonnet-5.
+    assert "model routine" in (tmp_path / "docs" / "index.html").read_text()
 
     assert cli.main(["notify-last"]) == 0

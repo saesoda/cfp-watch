@@ -11,6 +11,10 @@ separate GitHub Actions job) the emailing.
 
 ## 0. Setup
 
+The repo root is the working directory for every command below; all paths
+in this checklist (`config/journals.yaml`, `data/found/`, `data/`,
+`docs/`) are relative to it.
+
 ```bash
 pip install -e .
 rm -f data/found/*.json
@@ -132,6 +136,11 @@ git commit -m "cfp-watch: routine run $(date -u +%F)"
 git push origin main
 ```
 
+If `git commit` reports there is nothing to commit (ingest found no new,
+changed, expired, or errored calls, and the dashboard didn't change),
+stop here — there is nothing to push, and no `data/last_delta.json`
+change means the notify workflow won't (and shouldn't) fire.
+
 Pushing `data/last_delta.json` on `main` is what triggers the
 `.github/workflows/notify.yml` job, which emails the digest using
 `GMAIL_USER` / `GMAIL_APP_PASSWORD` — no Anthropic API key involved.
@@ -143,8 +152,9 @@ meantime), do not force-push. Instead:
 
 ```bash
 git checkout -b routine/$(date -u +%F)
-git push origin routine/$(date -u +%F)
-gh pr create --title "cfp-watch: routine run $(date -u +%F)" \
+git push -u origin routine/$(date -u +%F)
+gh pr create --base main --head routine/$(date -u +%F) \
+  --title "cfp-watch routine run" \
   --body "Automated search results from the cfp-watch cloud routine."
 ```
 
