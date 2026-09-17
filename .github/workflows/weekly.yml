@@ -24,6 +24,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,16 +39,20 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DIGEST_TO: ${{ secrets.DIGEST_TO }}
           CFPWATCH_MODEL: ${{ vars.CFPWATCH_MODEL }}
+          JOURNALS: ${{ inputs.journals }}
+          FORCE_EMAIL: ${{ inputs.force_email }}
         run: |
-          ARGS=""
-          if [ -n "${{ inputs.journals }}" ]; then ARGS="$ARGS --journals ${{ inputs.journals }}"; fi
-          if [ "${{ inputs.force_email }}" = "true" ]; then ARGS="$ARGS --force-email"; fi
-          python -m cfpwatch run $ARGS
+          ARGS=()
+          if [ -n "$JOURNALS" ]; then ARGS+=(--journals "$JOURNALS"); fi
+          if [ "$FORCE_EMAIL" = "true" ]; then ARGS+=(--force-email); fi
+          python -m cfpwatch run "${ARGS[@]}"
       - name: commit results
+        if: always()
         run: |
           git config user.name "cfp-watch bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/calls.json docs/index.html
           git diff --cached --quiet && echo "no changes" && exit 0
-          git commit -m "cfp-watch: run $(date -u +%F)"
+          git commit -m "cfp-watch: weekly run $(date -u +%F)"
+          git pull --rebase origin main
           git push
