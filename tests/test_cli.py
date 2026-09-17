@@ -245,9 +245,42 @@ def test_ingest_once_skips_unknown_journal_file_with_warning(tmp_path, capsys):
     source = tmp_path / "found"
     source.mkdir()
     (source / "not-a-journal.json").write_text(_search_output_json([]), encoding="utf-8")
+    (source / "os.json").write_text(_search_output_json([]), encoding="utf-8")
     ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
     out = capsys.readouterr().out
     assert "warning: unknown journal file not-a-journal.json" in out
+
+
+def test_ingest_once_raises_filenotfound_for_missing_source(tmp_path):
+    paths = _paths(tmp_path)
+    with pytest.raises(FileNotFoundError, match="ingest source not found"):
+        ingest_once(RunOptions(), paths, tmp_path / "does-not-exist", TODAY, env={})
+    assert not paths.store.exists() and not paths.last_delta.exists()
+
+
+def test_ingest_once_exits_when_source_has_no_journal_files(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()  # exists, but empty
+    with pytest.raises(SystemExit) as exc_info:
+        ingest_once(RunOptions(), paths, source, TODAY, env={})
+    assert exc_info.value.code == 2
+    assert f"error: no journal files found in {source}" in capsys.readouterr().out
+    assert not paths.store.exists() and not paths.dashboard.exists() and not paths.last_delta.exists()
+
+
+def test_ingest_once_exits_when_source_has_only_unknown_files(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "not-a-journal.json").write_text(_search_output_json([]), encoding="utf-8")
+    with pytest.raises(SystemExit) as exc_info:
+        ingest_once(RunOptions(), paths, source, TODAY, env={})
+    assert exc_info.value.code == 2
+    out = capsys.readouterr().out
+    assert "warning: unknown journal file not-a-journal.json" in out
+    assert f"error: no journal files found in {source}" in out
+    assert not paths.store.exists() and not paths.last_delta.exists()
 
 
 def test_ingest_once_prints_journals_with_no_file(tmp_path, capsys):

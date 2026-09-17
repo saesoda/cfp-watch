@@ -158,6 +158,9 @@ def ingest_once(
     sender=send_email,
     env=os.environ,
 ) -> Delta:
+    if not source.exists():
+        raise FileNotFoundError(f"ingest source not found: {source}")
+
     journals = load_journals(paths.config)
     by_key = {j.key: j for j in journals}
     store = Store.load(paths.store)
@@ -165,6 +168,7 @@ def ingest_once(
 
     files = sorted(source.glob("*.json")) if source.is_dir() else [source]
     seen_keys: set[str] = set()
+    processed = 0
 
     for f in files:
         key = f.stem
@@ -172,6 +176,7 @@ def ingest_once(
             print(f"warning: unknown journal file {f.name}")
             continue
         seen_keys.add(key)
+        processed += 1
         journal = by_key[key]
         try:
             raw = json.loads(f.read_text(encoding="utf-8"))
@@ -195,6 +200,10 @@ def ingest_once(
         total.new += d.new
         total.changed += d.changed
         total.expired += d.expired
+
+    if processed == 0:
+        print(f"error: no journal files found in {source}")
+        raise SystemExit(2)
 
     missing = sorted(j.key for j in journals if j.key not in seen_keys)
     if missing:
