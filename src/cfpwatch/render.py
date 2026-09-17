@@ -75,7 +75,7 @@ def _status_table(store: Store, meta: RunMeta) -> str:
         st = store.journals.get(j.key)
         n_open = sum(1 for c in store.calls.values() if c.journal == j.key and c.status == "open")
         ok = escape(st.last_ok) if st and st.last_ok else "never"
-        err = f'<span class="err">{escape(st.last_error)}</span>' if st and st.last_error else ""
+        err = f'<span class="err">{escape(st.last_error[:120])}</span>' if st and st.last_error else ""
         rows.append(f"<tr><td>{escape(j.name)}</td><td>{n_open}</td><td>{ok}</td><td>{err}</td></tr>")
     return (
         '<div class="wrap"><table><thead><tr><th>Journal</th><th>Open</th><th>Last successful check</th>'
@@ -99,7 +99,7 @@ def render_dashboard(store: Store, delta: Delta, meta: RunMeta) -> str:
 <body>
 <h1>Special-issue calls for papers</h1>
 <p class="muted">Last run {escape(meta.today.isoformat())} · model {escape(meta.model)} · {len(open_calls)} open calls</p>
-<h2>New this run</h2>
+<h2>New this week</h2>
 {new_section}
 <h2>All open calls</h2>
 {_table(open_calls, meta, new_ids)}
@@ -132,7 +132,7 @@ def render_email(store: Store, delta: Delta, meta: RunMeta) -> tuple[str, str]:
         parts.append(f"{len(delta.changed)} deadline{'s' if len(delta.changed) != 1 else ''} changed")
     if delta.errors:
         parts.append(f"{len(delta.errors)} journal error{'s' if len(delta.errors) != 1 else ''}")
-    subject = "cfp-watch: " + "; ".join(parts) if parts else "cfp-watch: weekly digest"
+    subject = ("cfp-watch: " + "; ".join(parts)) if parts else "cfp-watch: weekly digest"
 
     soon_cut = meta.today + dt.timedelta(days=SOON_DAYS)
     soon = [c for c in store.open_calls(meta.today)

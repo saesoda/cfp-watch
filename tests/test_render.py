@@ -1,4 +1,6 @@
 import datetime as dt
+import hashlib
+from html import escape
 
 from cfpwatch.models import Call, Delta, Journal
 from cfpwatch.render import RunMeta, render_dashboard, render_email
@@ -10,8 +12,9 @@ META = RunMeta(today=TODAY, model="claude-sonnet-5", dashboard_url="https://saes
 
 
 def _found(title, deadline, journal="os"):
+    slug = hashlib.md5(title.encode()).hexdigest()[:6]
     return Call(journal=journal, title=title, guest_editors=["Ed One"], opens=None, deadline=deadline,
-                deadline_text=None, url="https://x/" + str(abs(hash(title)) % 1000), source_url="https://s", summary="Sum <b>",
+                deadline_text=None, url="https://x/" + slug, source_url="https://s", summary="Sum <b>",
                 confidence="high", first_seen=TODAY.isoformat(), last_seen=TODAY.isoformat())
 
 
@@ -39,6 +42,24 @@ def test_dashboard_lists_open_calls_once_sorted_and_escapes():
 def test_dashboard_with_empty_store_renders():
     html = render_dashboard(Store(), Delta([], [], [], {}), META)
     assert "No open calls" in html
+
+
+def test_dashboard_new_section_heading_says_this_week():
+    s, delta = _store()
+    html = render_dashboard(s, delta, META)
+    assert "New this week" in html
+    assert "New this run" not in html
+
+
+def test_dashboard_truncates_long_error_to_120_chars():
+    s = Store()
+    merge(s, "os", [_found("Some Call", "2027-01-01")], TODAY)
+    long_error = "boom " * 40  # well over 120 chars
+    record_error(s, "os", long_error, TODAY)
+    html = render_dashboard(s, Delta([], [], [], {}), META)
+    shown = long_error[:120]
+    assert escape(shown) in html
+    assert escape(long_error) not in html
 
 
 def test_email_subject_counts_new_and_lists_journals():
