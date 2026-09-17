@@ -101,7 +101,16 @@ schema (the package's `SearchOutput` / `FoundCall` models):
 Write a file for every journal you searched, even if `calls` is empty —
 an empty `calls` list is how the ingest step learns "checked, found
 nothing." Skip a journal only if you genuinely could not run its
-searches; the ingest step will report it as "no file for: <key>."
+searches; the ingest step will report it as "no file for: <key>" and
+record it as an error in that run's digest.
+
+Include every key listed above on every call object — use `null`, `[]`,
+or `""` rather than omitting a key you don't have a value for (e.g.
+`"deadline_text": null`, not leaving it out). The ingest step does
+tolerate a call object that's missing an optional key (it fills
+`guest_editors`, `opens`, `deadline`, `deadline_text`, `source_url`,
+`summary`, and `confidence` with sensible defaults if absent), but don't
+rely on that — write the complete object.
 
 ## 3. Ingest the files (no API call, no email yet)
 

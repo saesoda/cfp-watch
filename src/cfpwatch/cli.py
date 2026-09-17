@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
 import os
 import sys
 from dataclasses import dataclass
@@ -132,6 +133,23 @@ def finish_run(
     return total
 
 
+def _fill_call_defaults(obj: dict) -> dict:
+    """Fill in optional FoundCall keys a routine-written JSON file omitted.
+
+    `title` and `url` stay required — if either is missing, validation
+    still fails and the file is reported as a journal error, as before.
+    """
+    filled = dict(obj)
+    filled.setdefault("guest_editors", [])
+    filled.setdefault("opens", None)
+    filled.setdefault("deadline", None)
+    filled.setdefault("deadline_text", None)
+    filled.setdefault("source_url", filled.get("url", ""))
+    filled.setdefault("summary", "")
+    filled.setdefault("confidence", "low")
+    return filled
+
+
 def ingest_once(
     opts: RunOptions,
     paths: Paths,
@@ -156,7 +174,12 @@ def ingest_once(
         seen_keys.add(key)
         journal = by_key[key]
         try:
-            parsed = SearchOutput.model_validate_json(f.read_text(encoding="utf-8"))
+            raw = json.loads(f.read_text(encoding="utf-8"))
+            if isinstance(raw, dict) and isinstance(raw.get("calls"), list):
+                raw["calls"] = [
+                    _fill_call_defaults(c) if isinstance(c, dict) else c for c in raw["calls"]
+                ]
+            parsed = SearchOutput.model_validate(raw)
         except Exception as e:
             err = f"ingest: {e}"[:500]
             print(f"[{key}] ERROR {err}", flush=True)

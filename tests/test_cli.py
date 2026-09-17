@@ -206,6 +206,24 @@ def test_ingest_once_happy_path_writes_store_dashboard_last_delta_and_emails(tmp
     assert sent and sent[0][0].startswith("cfp-watch: 1 new call") and sent[0][2] == "me@gmail.com"
 
 
+def test_ingest_once_fills_missing_optional_keys_with_defaults(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    minimal_call = {"title": "Digital Strategy", "url": "https://example.org/call"}
+    (source / "os.json").write_text(json.dumps({"calls": [minimal_call], "notes": ""}), encoding="utf-8")
+    delta = ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+    assert [c.title for c in delta.new] == ["Digital Strategy"]
+    call = delta.new[0]
+    assert call.confidence == "low"
+    assert call.guest_editors == []
+    assert call.opens is None
+    assert call.deadline is None
+    assert call.deadline_text is None
+    assert call.source_url == "https://example.org/call"
+    assert call.summary == ""
+
+
 def test_ingest_once_invalid_file_records_error_and_emails_it(tmp_path):
     paths = _paths(tmp_path)
     source = tmp_path / "found"
