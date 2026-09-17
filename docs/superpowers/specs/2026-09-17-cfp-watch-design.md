@@ -154,7 +154,8 @@ Record:
 Normalization for the id: lowercase, strip punctuation, collapse whitespace,
 drop a leading "special issue on / special issue:" prefix. Two titles that
 still differ by wording are treated as different calls; a low-cost fuzzy
-match (token-set ratio ≥ 0.9 via `rapidfuzz`) merges near-duplicates within
+match (token-sort ratio ≥ 90 after also stripping trailing "special issue" /
+"call for papers" suffixes, via `rapidfuzz`) merges near-duplicates within
 the same journal.
 
 `merge(store, journal, found, today) -> Delta`:
@@ -167,6 +168,8 @@ the same journal.
 - id in store, not seen for 3 consecutive successful runs of that journal and
   no deadline known → status `stale` (hidden from the dashboard's open list).
 - Journals whose search errored do not touch their existing records.
+- An expired call seen again with a future or unknown deadline returns to
+  open and is reported as new.
 
 `Delta` = new, changed, expired lists plus per-journal `errors`.
 
@@ -201,7 +204,10 @@ the same journal.
   `workflow_dispatch`.
 - Steps: checkout, Python 3.12, `pip install -e .`, `python -m cfpwatch run`,
   commit `data/calls.json` + `docs/index.html` with message
-  `cfp-watch: weekly run YYYY-MM-DD`, push.
+  `cfp-watch: weekly run YYYY-MM-DD`, push. The commit step runs with
+  `if: always()` so a failed run still saves partial progress, and rebases
+  onto `origin/main` (`git pull --rebase`) before pushing to avoid racing a
+  concurrent commit.
 - Secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`. Optional
   variable: `CFPWATCH_MODEL`.
 - Pages: source = `main` branch, `/docs` folder.
@@ -216,7 +222,7 @@ the same journal.
 | Direct URL blocked or down | Silently skipped; search still runs |
 | Claude API error for one journal | Journal marked errored in delta, records untouched, others continue, email sent listing the error |
 | Refusal | Server-side fallback; if still refused, treated as error |
-| Structured output parse failure | Cannot happen with `parse()`; SDK error → journal error |
+| Structured output validation error (pydantic) | caught as a journal error like any other exception |
 | Gmail send failure | Exception propagates; workflow fails; GitHub notifies |
 | All journals error | Email with errors only; workflow still succeeds |
 
