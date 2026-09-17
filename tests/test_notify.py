@@ -39,3 +39,10 @@ def test_send_email_respects_explicit_recipient(monkeypatch):
     monkeypatch.setattr(notify.smtplib, "SMTP_SSL", _FakeSMTP)
     notify.send_email("S", "<p>x</p>", user="me@gmail.com", password="pw", to="other@x.org")
     assert _FakeSMTP.instances[-1].sent[0]["To"] == "other@x.org"
+
+
+def test_plain_text_part_decodes_entities(monkeypatch):
+    monkeypatch.setattr(notify.smtplib, "SMTP_SSL", _FakeSMTP)
+    notify.send_email("S", "<p>Strategy &amp; Society &lt;2027&gt;</p>", user="me@gmail.com", password="pw")
+    plain = _FakeSMTP.instances[-1].sent[0].get_payload()[0].get_payload(decode=True).decode()
+    assert "Strategy & Society <2027>" in plain and "&amp;" not in plain

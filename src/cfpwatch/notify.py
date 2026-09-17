@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html as html_lib
 import re
 import smtplib
 from email.message import EmailMessage
@@ -11,6 +12,7 @@ SMTP_PORT = 465
 def _plain(html: str) -> str:
     text = re.sub(r"<br\s*/?>|</li>|</p>|</h\d>", "\n", html)
     text = re.sub(r"<[^>]+>", "", text)
+    text = html_lib.unescape(text)
     return re.sub(r"\n{3,}", "\n\n", text).strip()
 
 
