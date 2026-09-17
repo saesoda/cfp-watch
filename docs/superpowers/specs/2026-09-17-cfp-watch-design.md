@@ -274,3 +274,100 @@ cfp_watch/
   docs/superpowers/specs/2026-09-17-cfp-watch-design.md
   .github/workflows/weekly.yml
 ```
+
+## 11. Zero-API-cost revision (2026-09-17)
+
+> Note on numbering: this section is appended after §10 (Repo layout),
+> which already used the number "10" in the original design above. It
+> covers the same ground the brief for this revision calls "§10" —
+> the zero-API-cost mode — under the next free section number instead of
+> colliding with the existing one.
+
+The scheduled job must not call the Anthropic API. Search is now performed
+by a Claude Code cloud routine running on the maintainer's own Claude
+subscription instead of `cfpwatch run`'s `anthropic.Anthropic()` client.
+The package's job shrinks to ingesting whatever the routine found,
+rendering, and emailing.
+
+### Flow
+
+1. **Routine** (outside this repo's code, driven by
+   [`scripts/routine.md`](../../../scripts/routine.md)): for each journal in
+   `config/journals.yaml`, run web searches (same "what counts as a call"
+   and date rules `search.build_prompt` used to give the model), and write
+   `data/found/<journal_key>.json` in the `SearchOutput` shape
+   (`{"calls": [...], "notes": "..."}`, one `FoundCall` per call).
+2. **Ingest** (`python -m cfpwatch ingest data/found`, new `cli.ingest_once`):
+   reads every `<key>.json` in that directory, validates it against
+   `SearchOutput`, converts each `FoundCall` via `search.to_call` (the
+   renamed, no-longer-private `search._to_call`), and merges into the store
+   exactly like `run_once` did with a live search result. A file whose key
+   isn't a configured journal is skipped with a `warning: unknown journal
+   file <name>` line. A file that fails to parse or validate is recorded as
+   a per-journal error (`record_error(store, key, f"ingest: {err}"[:500],
+   today)`) instead of crashing the whole ingest. A configured journal with
+   no file is left untouched and named in one `no file for: ...` line.
+   Ingest then calls the same `finish_run` tail `run_once` uses: `expire_all`,
+   `render_email`/`render_dashboard`, the dry-run short-circuit, saving the
+   store, and the email policy (including raising if email is due but
+   `GMAIL_USER`/`GMAIL_APP_PASSWORD` are unset) — the only difference from a
+   live `run` is where the `Delta` came from.
+3. **Push**: the routine commits `data/` and `docs/` and pushes to `main`
+   (falling back to a `routine/<date>` branch + PR if the push is
+   rejected).
+4. **Notify**: `.github/workflows/notify.yml` triggers on a push to `main`
+   that touches `data/last_delta.json`, and runs
+   `python -m cfpwatch notify-last`. This calls the new `cli.notify_last`,
+   which loads the store and `read_last_delta(paths.last_delta, store)`,
+   rebuilds the same subject/HTML `render_email` would have built for that
+   run, and sends it if `delta.should_email` (or `--force-email`) — without
+   re-running `expire_all`, re-saving the store, or rewriting the
+   dashboard. If `data/last_delta.json` is missing it prints "no
+   last_delta.json; nothing to send" and returns `False` rather than
+   raising. This workflow only ever needs `GMAIL_USER` /
+   `GMAIL_APP_PASSWORD` (+ optional `DIGEST_TO`); it has no
+   `ANTHROPIC_API_KEY` anywhere in its `env:` blocks.
+
+### `data/last_delta.json` contract
+
+Written by `store.write_last_delta` immediately after `store.save` inside
+`finish_run` (skipped on `--dry-run`, same as the store itself), and read
+by `store.read_last_delta`. Shape:
+
+```json
+{
+  "date": "2026-09-21",
+  "new": ["os:1a2b3c4d"],
+  "changed": [["smj:...", "2026-12-01"]],
+  "expired": ["..."],
+  "errors": {"jms": "ingest: ..."}
+}
+```
+
+`new`/`changed`/`expired` store only call ids (`changed` pairs an id with
+the *previous* deadline string); `read_last_delta` looks each id up in the
+freshly loaded `Store` and silently drops any id no longer present (e.g. a
+call purged by some future cleanup), so a stale `last_delta.json` degrades
+gracefully instead of crashing `notify-last`. Missing file → `None`, not an
+exception — `notify_last` treats that as "nothing to send."
+
+### What §5.8 becomes
+
+§5.8 described a `schedule: cron` job that ran `cfpwatch run` (with the API
+key) and committed its own results with `if: always()` + rebase-and-push.
+That cron-driven, self-committing workflow is retired. In its place:
+
+- The cron trigger is gone; `.github/workflows/notify.yml` is
+  `on: push` (path-filtered to `data/last_delta.json`) plus
+  `workflow_dispatch`, so it fires only after the routine has already
+  committed and pushed real search results, not on a timer.
+- The workflow no longer commits anything itself (`permissions:
+  contents: read` is now sufficient) — the routine (outside GitHub
+  Actions) owns the commit-and-push step described above.
+- `ANTHROPIC_API_KEY` is removed from the workflow's secrets entirely; the
+  only secrets it reads are `GMAIL_USER`, `GMAIL_APP_PASSWORD`, and the
+  optional `DIGEST_TO`.
+- The old `run --journals ... --force-email` manual-dispatch path (for
+  testing search) has no equivalent here, because this workflow never
+  searches; `workflow_dispatch` on it only offers `force_email`, to
+  resend the last ingested delta.
