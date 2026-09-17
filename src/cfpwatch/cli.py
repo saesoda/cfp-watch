@@ -208,6 +208,10 @@ def ingest_once(
     missing = sorted(j.key for j in journals if j.key not in seen_keys)
     if missing:
         print(f"no file for: {', '.join(missing)}")
+        for key in missing:
+            err = "ingest: no results file"
+            record_error(store, key, err, today)
+            total.errors[key] = err
 
     return finish_run(store, total, opts, paths, today, sender, env)
 

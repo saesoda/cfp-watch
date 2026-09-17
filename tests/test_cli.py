@@ -204,6 +204,12 @@ def test_ingest_once_happy_path_writes_store_dashboard_last_delta_and_emails(tmp
     assert "Digital Strategy" in paths.dashboard.read_text()
     assert paths.last_delta.exists()
     assert sent and sent[0][0].startswith("cfp-watch: 1 new call") and sent[0][2] == "me@gmail.com"
+    # Every other configured journal had no file this run, so each is
+    # recorded as an error rather than silently looking "checked, clean."
+    assert "os" not in delta.errors
+    assert "smj" in delta.errors
+    assert delta.errors["smj"] == "ingest: no results file"
+    assert "journal error" in sent[0][0]
 
 
 def test_ingest_once_fills_missing_optional_keys_with_defaults(tmp_path):
@@ -236,8 +242,22 @@ def test_ingest_once_invalid_file_records_error_and_emails_it(tmp_path):
     assert "smj" in delta.errors
     data = json.loads(paths.store.read_text())
     assert data["journals"]["smj"]["last_error"].startswith("ingest:")
-    assert sent and "1 journal error" in sent[0][0]
+    assert sent and "journal error" in sent[0][0]
     assert "ingest:" in sent[0][1]
+
+
+def test_ingest_once_records_error_for_journals_with_no_file(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([]), encoding="utf-8")
+    delta = ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+    assert "os" not in delta.errors
+    assert delta.errors["smj"] == "ingest: no results file"
+    data = json.loads(paths.store.read_text())
+    assert data["journals"]["smj"]["last_error"] == "ingest: no results file"
+    out = capsys.readouterr().out
+    assert "no file for:" in out and "smj" in out
 
 
 def test_ingest_once_skips_unknown_journal_file_with_warning(tmp_path, capsys):
@@ -335,14 +355,18 @@ def test_notify_last_missing_file_returns_false_and_does_not_send(tmp_path, caps
 
 def test_main_ingest_and_notify_last_work_via_cfpwatch_root_env(tmp_path, monkeypatch):
     from cfpwatch import cli
+    from cfpwatch.config import load_journals
 
     (tmp_path / "config").mkdir()
     (tmp_path / "config" / "journals.yaml").write_text((ROOT / "config" / "journals.yaml").read_text())
     source = tmp_path / "found"
     source.mkdir()
-    # No calls, so the resulting delta has nothing to email: notify-last can
-    # then run to completion with no GMAIL credentials and no network access.
-    (source / "os.json").write_text(_search_output_json([]), encoding="utf-8")
+    # An empty-calls file for every configured journal, so no journal is
+    # "uncovered" (which would otherwise be recorded as an error): the
+    # resulting delta has nothing to email, so notify-last can run to
+    # completion with no GMAIL credentials and no network access.
+    for j in load_journals(tmp_path / "config" / "journals.yaml"):
+        (source / f"{j.key}.json").write_text(_search_output_json([]), encoding="utf-8")
     monkeypatch.setenv("CFPWATCH_ROOT", str(tmp_path))
     monkeypatch.delenv("GMAIL_USER", raising=False)
     monkeypatch.delenv("GMAIL_APP_PASSWORD", raising=False)
