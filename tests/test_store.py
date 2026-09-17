@@ -232,3 +232,18 @@ def test_read_last_delta_skips_unknown_ids(tmp_path):
     assert read_delta.changed == []
     assert read_delta.expired == []
     assert read_date == TODAY
+
+
+def test_write_and_read_last_delta_changed_entry_with_none_old_deadline(tmp_path):
+    s = Store()
+    merge(s, "os", [_found("Digital Strategy", None)], TODAY)
+    call = next(iter(s.calls.values()))
+    delta = Delta(new=[], changed=[(call, None)], expired=[], errors={})
+    p = tmp_path / "last_delta.json"
+    write_last_delta(p, delta, TODAY)
+
+    data = json.loads(p.read_text())
+    assert data["changed"] == [[call.id, None]]
+
+    read_delta, _ = read_last_delta(p, s)
+    assert read_delta.changed == [(call, None)]

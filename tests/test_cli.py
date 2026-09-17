@@ -5,8 +5,9 @@ from pathlib import Path
 import pytest
 
 from cfpwatch.cli import Paths, RunOptions, ingest_once, notify_last, run_once
-from cfpwatch.models import Call
+from cfpwatch.models import Call, Delta
 from cfpwatch.search import SearchResult
+from cfpwatch.store import Store, write_last_delta
 
 ROOT = Path(__file__).resolve().parents[1]
 TODAY = dt.date(2026, 9, 22)
@@ -351,6 +352,32 @@ def test_notify_last_missing_file_returns_false_and_does_not_send(tmp_path, caps
     ok = notify_last(paths, sender=must_not_send, env={"GMAIL_USER": "u", "GMAIL_APP_PASSWORD": "p"})
     assert ok is False
     assert "no last_delta.json; nothing to send" in capsys.readouterr().out
+
+
+def test_notify_last_force_sends_even_when_delta_is_empty(tmp_path):
+    paths = _paths(tmp_path)
+    Store().save(paths.store)
+    write_last_delta(paths.last_delta, Delta(new=[], changed=[], expired=[], errors={}), TODAY)
+
+    sent = []
+    ok = notify_last(paths, sender=lambda subject, html, user, pw, to=None: sent.append(subject),
+                     env={"GMAIL_USER": "me@gmail.com", "GMAIL_APP_PASSWORD": "pw"}, force=True)
+    assert ok is True
+    assert sent == ["cfp-watch: weekly digest"]
+
+
+def test_notify_last_raises_when_credentials_missing_and_email_due(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([_found_call_json()]), encoding="utf-8")
+    ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+
+    def must_not_send(*a, **k):
+        raise AssertionError("should not send")
+
+    with pytest.raises(RuntimeError, match="GMAIL_USER"):
+        notify_last(paths, sender=must_not_send, env={})
 
 
 def test_main_ingest_and_notify_last_work_via_cfpwatch_root_env(tmp_path, monkeypatch):
