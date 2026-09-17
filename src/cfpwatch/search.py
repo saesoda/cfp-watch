@@ -11,7 +11,7 @@ from .models import Call, Journal, parse_date
 
 DEFAULT_MODEL = "claude-sonnet-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
-MAX_PAUSE_RESTARTS = 3
+MAX_PAUSE_RESTARTS = 1
 
 WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 5}
 WEB_FETCH_TOOL = {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 3}
@@ -87,9 +87,9 @@ def _to_call(fc: FoundCall, journal: Journal, today: dt.date) -> Call | None:
         journal=journal.key,
         title=title,
         guest_editors=[g.strip() for g in fc.guest_editors if g.strip()],
-        opens=fc.opens,
+        opens=(o.isoformat() if (o := parse_date(fc.opens)) else None),
         deadline=d.isoformat() if d else None,
-        deadline_text=fc.deadline_text,
+        deadline_text=fc.deadline_text or fc.deadline,
         url=fc.url,
         source_url=fc.source_url,
         summary=fc.summary.strip(),
@@ -150,4 +150,6 @@ def find_calls(
         result.error = f"connection error: {e}"
     except anthropic.APIError as e:
         result.error = f"api error: {e}"
+    except Exception as e:
+        result.error = f"unexpected {type(e).__name__}: {e}"
     return result

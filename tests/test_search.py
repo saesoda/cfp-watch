@@ -2,10 +2,12 @@ import datetime as dt
 from types import SimpleNamespace
 
 import anthropic
+import pydantic
 
 from cfpwatch.models import Journal
 from cfpwatch.search import (
     DEFAULT_MODEL,
+    MAX_PAUSE_RESTARTS,
     FoundCall,
     SearchOutput,
     build_prompt,
@@ -110,3 +112,43 @@ def test_find_calls_reports_sdk_errors_without_raising():
     client, _ = _client(anthropic.APIConnectionError(request=None))
     res = find_calls(client, J, TODAY, [], model=DEFAULT_MODEL)
     assert res.error and res.calls == []
+
+
+def test_find_calls_reports_non_anthropic_exception_as_error_without_raising():
+    try:
+        SearchOutput.model_validate({"calls": "x"})
+    except pydantic.ValidationError as e:
+        exc = e
+    else:  # pragma: no cover - should always raise
+        raise AssertionError("expected a ValidationError")
+    client, _ = _client(exc)
+    res = find_calls(client, J, TODAY, [], model=DEFAULT_MODEL)
+    assert res.error and "unexpected" in res.error and "ValidationError" in res.error
+    assert res.calls == []
+
+
+def test_find_calls_reports_max_tokens_without_parsed_output():
+    client, _ = _client(_resp([], stop_reason="max_tokens", parsed=False))
+    res = find_calls(client, J, TODAY, [], model=DEFAULT_MODEL)
+    assert res.error and "max_tokens" in res.error
+
+
+def test_find_calls_reports_error_after_exceeding_pause_restart_limit():
+    client, parse = _client(
+        _resp([], stop_reason="pause_turn", parsed=False),
+        _resp([], stop_reason="pause_turn", parsed=False),
+    )
+    res = find_calls(client, J, TODAY, [], model=DEFAULT_MODEL)
+    assert res.error == "pause_turn: exceeded restart limit"
+    assert len(parse.calls) == MAX_PAUSE_RESTARTS + 1 == 2
+
+
+def test_find_calls_keeps_vague_deadline_text():
+    fc = FoundCall(title="Digital Strategy", guest_editors=[], opens=None, deadline="Spring 2027",
+                   deadline_text=None, url="https://u", source_url="https://s", summary="", confidence="low")
+    client, _ = _client(_resp([fc]))
+    res = find_calls(client, J, TODAY, [], model=DEFAULT_MODEL)
+    assert res.error is None
+    assert len(res.calls) == 1
+    assert res.calls[0].deadline is None
+    assert res.calls[0].deadline_text == "Spring 2027"
