@@ -14,8 +14,8 @@ from .fetch import fetch_text
 from .models import Delta
 from .notify import send_email
 from .render import RunMeta, render_dashboard, render_email
-from .search import DEFAULT_MODEL, find_calls
-from .store import Store, expire_all, merge, record_error
+from .search import DEFAULT_MODEL, SearchOutput, find_calls, to_call
+from .store import Store, expire_all, merge, read_last_delta, record_error, write_last_delta
 
 DEFAULT_DASHBOARD_URL = "https://saesoda.github.io/cfp-watch/"
 
@@ -45,6 +45,10 @@ class Paths:
     @property
     def dashboard(self) -> Path:
         return self.root / "docs" / "index.html"
+
+    @property
+    def last_delta(self) -> Path:
+        return self.root / "data" / "last_delta.json"
 
 
 def run_once(
@@ -89,6 +93,18 @@ def run_once(
         total.expired += d.expired
 
     print(f"tokens total: {in_total}/{out_total}")
+    return finish_run(store, total, opts, paths, today, sender, env)
+
+
+def finish_run(
+    store: Store,
+    total: Delta,
+    opts: RunOptions,
+    paths: Paths,
+    today: dt.date,
+    sender,
+    env,
+) -> Delta:
     total.expired += expire_all(store, today)
 
     meta = RunMeta(today=today, model=opts.model,
@@ -101,6 +117,7 @@ def run_once(
         return total
 
     store.save(paths.store)
+    write_last_delta(paths.last_delta, total, today)
     paths.dashboard.parent.mkdir(parents=True, exist_ok=True)
     paths.dashboard.write_text(render_dashboard(store, total, meta), encoding="utf-8")
 
@@ -115,6 +132,83 @@ def run_once(
     return total
 
 
+def ingest_once(
+    opts: RunOptions,
+    paths: Paths,
+    source: Path,
+    today: dt.date,
+    sender=send_email,
+    env=os.environ,
+) -> Delta:
+    journals = load_journals(paths.config)
+    by_key = {j.key: j for j in journals}
+    store = Store.load(paths.store)
+    total = Delta(new=[], changed=[], expired=[], errors={})
+
+    files = sorted(source.glob("*.json")) if source.is_dir() else [source]
+    seen_keys: set[str] = set()
+
+    for f in files:
+        key = f.stem
+        if key not in by_key:
+            print(f"warning: unknown journal file {f.name}")
+            continue
+        seen_keys.add(key)
+        journal = by_key[key]
+        try:
+            parsed = SearchOutput.model_validate_json(f.read_text(encoding="utf-8"))
+        except Exception as e:
+            err = f"ingest: {e}"[:500]
+            print(f"[{key}] ERROR {err}", flush=True)
+            record_error(store, key, err, today)
+            total.errors[key] = err
+            continue
+        calls = [c for c in (to_call(fc, journal, today) for fc in parsed.calls) if c]
+        d = merge(store, key, calls, today)
+        print(f"[{key}] ingested {len(calls)}: new {len(d.new)}, changed {len(d.changed)}, "
+              f"expired {len(d.expired)}", flush=True)
+        if parsed.notes:
+            print(f"[{key}] notes: {parsed.notes}", flush=True)
+        total.new += d.new
+        total.changed += d.changed
+        total.expired += d.expired
+
+    missing = sorted(j.key for j in journals if j.key not in seen_keys)
+    if missing:
+        print(f"no file for: {', '.join(missing)}")
+
+    return finish_run(store, total, opts, paths, today, sender, env)
+
+
+def notify_last(
+    paths: Paths,
+    sender=send_email,
+    env=os.environ,
+    force: bool = False,
+) -> bool:
+    store = Store.load(paths.store)
+    result = read_last_delta(paths.last_delta, store)
+    if result is None:
+        print("no last_delta.json; nothing to send")
+        return False
+    delta, last_date = result
+
+    meta = RunMeta(today=last_date, model="routine",
+                   dashboard_url=env.get("CFPWATCH_DASHBOARD_URL", DEFAULT_DASHBOARD_URL),
+                   journals=load_journals(paths.config))
+    subject, html = render_email(store, delta, meta)
+
+    if not (delta.should_email or force):
+        print(f"no email ({subject})")
+        return False
+    user, pw = env.get("GMAIL_USER"), env.get("GMAIL_APP_PASSWORD")
+    if not user or not pw:
+        raise RuntimeError("email due but GMAIL_USER / GMAIL_APP_PASSWORD not set")
+    sender(subject, html, user, pw, env.get("DIGEST_TO") or None)
+    print(f"email sent: {subject}")
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="cfpwatch")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -125,6 +219,13 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--force-email", action="store_true")
     run.add_argument("--max-searches", type=int, default=5)
     sub.add_parser("render", help="rebuild the dashboard from the store without searching")
+    ingest = sub.add_parser("ingest", help="ingest pre-searched SearchOutput JSON files without calling the API")
+    ingest.add_argument("path", help="directory of <journal_key>.json files, or a single such file")
+    ingest.add_argument("--dry-run", action="store_true")
+    ingest.add_argument("--no-email", action="store_true")
+    ingest.add_argument("--force-email", action="store_true")
+    notify = sub.add_parser("notify-last", help="email the most recently ingested delta from data/last_delta.json")
+    notify.add_argument("--force-email", action="store_true")
     args = ap.parse_args(argv)
 
     paths = Paths(root=Path(os.environ.get("CFPWATCH_ROOT") or Path(__file__).resolve().parents[2]))
@@ -139,6 +240,15 @@ def main(argv: list[str] | None = None) -> int:
         paths.dashboard.parent.mkdir(parents=True, exist_ok=True)
         paths.dashboard.write_text(render_dashboard(store, Delta([], [], [], {}), meta), encoding="utf-8")
         print(f"wrote {paths.dashboard}")
+        return 0
+
+    if args.cmd == "ingest":
+        opts = RunOptions(dry_run=args.dry_run, no_email=args.no_email, force_email=args.force_email, model=model)
+        ingest_once(opts, paths, Path(args.path), today)
+        return 0
+
+    if args.cmd == "notify-last":
+        notify_last(paths, force=args.force_email)
         return 0
 
     opts = RunOptions(

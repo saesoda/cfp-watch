@@ -75,7 +75,7 @@ How to work:
     return system, user
 
 
-def _to_call(fc: FoundCall, journal: Journal, today: dt.date) -> Call | None:
+def to_call(fc: FoundCall, journal: Journal, today: dt.date) -> Call | None:
     title = fc.title.strip()
     if not title:
         return None
@@ -97,6 +97,9 @@ def _to_call(fc: FoundCall, journal: Journal, today: dt.date) -> Call | None:
         first_seen=ts,
         last_seen=ts,
     )
+
+
+_to_call = to_call  # backward-compatible alias for the former module-private name
 
 
 def find_calls(
@@ -138,7 +141,7 @@ def find_calls(
                 result.error = f"no structured output (stop_reason={resp.stop_reason})"
                 return result
             result.notes = parsed.notes
-            result.calls = [c for c in (_to_call(fc, journal, today) for fc in parsed.calls) if c]
+            result.calls = [c for c in (to_call(fc, journal, today) for fc in parsed.calls) if c]
             return result
         result.error = "pause_turn: exceeded restart limit"
         return result

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cfpwatch.cli import Paths, RunOptions, run_once
+from cfpwatch.cli import Paths, RunOptions, ingest_once, notify_last, run_once
 from cfpwatch.models import Call
 from cfpwatch.search import SearchResult
 
@@ -159,3 +159,149 @@ def test_main_treats_empty_model_env_as_default(monkeypatch):
     monkeypatch.setattr(cli.anthropic, "Anthropic", lambda: object())
     assert cli.main(["run", "--dry-run"]) == 0
     assert captured["model"] == "claude-sonnet-5"
+
+
+def test_run_once_writes_last_delta(tmp_path):
+    paths = _paths(tmp_path)
+    searcher = _searcher({"os": SearchResult(calls=[_call("os", "Digital Strategy")])})
+    run_once(RunOptions(journals=["os"], no_email=True), paths, client=object(), today=TODAY,
+             fetcher=lambda url: None, searcher=searcher, env={})
+    data = json.loads(paths.last_delta.read_text())
+    assert data["date"] == TODAY.isoformat()
+    assert len(data["new"]) == 1
+
+
+def _found_call_json(title="Digital Strategy", deadline="2027-01-01", confidence="high"):
+    return {
+        "title": title,
+        "guest_editors": [],
+        "opens": None,
+        "deadline": deadline,
+        "deadline_text": None,
+        "url": "https://example.org/call",
+        "source_url": "https://example.org/call",
+        "summary": "A special issue.",
+        "confidence": confidence,
+    }
+
+
+def _search_output_json(calls, notes=""):
+    return json.dumps({"calls": calls, "notes": notes})
+
+
+def test_ingest_once_happy_path_writes_store_dashboard_last_delta_and_emails(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([_found_call_json()]), encoding="utf-8")
+    sent = []
+    delta = ingest_once(RunOptions(), paths, source, TODAY,
+                        sender=lambda subject, html, user, pw, to=None: sent.append((subject, html, user, to)),
+                        env={"GMAIL_USER": "me@gmail.com", "GMAIL_APP_PASSWORD": "pw"})
+    assert [c.title for c in delta.new] == ["Digital Strategy"]
+    data = json.loads(paths.store.read_text())
+    assert len(data["calls"]) == 1
+    assert "Digital Strategy" in paths.dashboard.read_text()
+    assert paths.last_delta.exists()
+    assert sent and sent[0][0].startswith("cfp-watch: 1 new call") and sent[0][2] == "me@gmail.com"
+
+
+def test_ingest_once_invalid_file_records_error_and_emails_it(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "smj.json").write_text(json.dumps({"calls": [{"title": "Bad"}], "notes": ""}), encoding="utf-8")
+    sent = []
+    delta = ingest_once(RunOptions(), paths, source, TODAY,
+                        sender=lambda subject, html, user, pw, to=None: sent.append((subject, html)),
+                        env={"GMAIL_USER": "u", "GMAIL_APP_PASSWORD": "p"})
+    assert "smj" in delta.errors
+    data = json.loads(paths.store.read_text())
+    assert data["journals"]["smj"]["last_error"].startswith("ingest:")
+    assert sent and "1 journal error" in sent[0][0]
+    assert "ingest:" in sent[0][1]
+
+
+def test_ingest_once_skips_unknown_journal_file_with_warning(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "not-a-journal.json").write_text(_search_output_json([]), encoding="utf-8")
+    ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+    out = capsys.readouterr().out
+    assert "warning: unknown journal file not-a-journal.json" in out
+
+
+def test_ingest_once_prints_journals_with_no_file(tmp_path, capsys):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([]), encoding="utf-8")
+    ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+    out = capsys.readouterr().out
+    assert "no file for:" in out
+    assert "smj" in out
+
+
+def test_ingest_once_dry_run_writes_nothing(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([_found_call_json()]), encoding="utf-8")
+    sent = []
+    delta = ingest_once(RunOptions(dry_run=True, force_email=True), paths, source, TODAY,
+                        sender=lambda *a, **k: sent.append(a),
+                        env={"GMAIL_USER": "u", "GMAIL_APP_PASSWORD": "p"})
+    assert len(delta.new) == 1
+    assert not paths.store.exists() and not paths.dashboard.exists() and not paths.last_delta.exists()
+    assert sent == []
+
+
+def test_notify_last_sends_from_last_delta(tmp_path):
+    paths = _paths(tmp_path)
+    source = tmp_path / "found"
+    source.mkdir()
+    (source / "os.json").write_text(_search_output_json([_found_call_json()]), encoding="utf-8")
+    ingest_once(RunOptions(no_email=True), paths, source, TODAY, env={})
+
+    sent = []
+    ok = notify_last(paths, sender=lambda subject, html, user, pw, to=None: sent.append((subject, user)),
+                     env={"GMAIL_USER": "me@gmail.com", "GMAIL_APP_PASSWORD": "pw"})
+    assert ok is True
+    assert sent and sent[0][0].startswith("cfp-watch: 1 new call") and sent[0][1] == "me@gmail.com"
+
+
+def test_notify_last_missing_file_returns_false_and_does_not_send(tmp_path, capsys):
+    paths = _paths(tmp_path)
+
+    def must_not_send(*a, **k):
+        raise AssertionError("should not send")
+
+    ok = notify_last(paths, sender=must_not_send, env={"GMAIL_USER": "u", "GMAIL_APP_PASSWORD": "p"})
+    assert ok is False
+    assert "no last_delta.json; nothing to send" in capsys.readouterr().out
+
+
+def test_main_ingest_and_notify_last_work_via_cfpwatch_root_env(tmp_path, monkeypatch):
+    from cfpwatch import cli
+
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "journals.yaml").write_text((ROOT / "config" / "journals.yaml").read_text())
+    source = tmp_path / "found"
+    source.mkdir()
+    # No calls, so the resulting delta has nothing to email: notify-last can
+    # then run to completion with no GMAIL credentials and no network access.
+    (source / "os.json").write_text(_search_output_json([]), encoding="utf-8")
+    monkeypatch.setenv("CFPWATCH_ROOT", str(tmp_path))
+    monkeypatch.delenv("GMAIL_USER", raising=False)
+    monkeypatch.delenv("GMAIL_APP_PASSWORD", raising=False)
+
+    def boom():
+        raise AssertionError("must not construct anthropic.Anthropic()")
+
+    monkeypatch.setattr(cli.anthropic, "Anthropic", boom)
+
+    assert cli.main(["ingest", str(source), "--no-email"]) == 0
+    assert (tmp_path / "data" / "last_delta.json").exists()
+
+    assert cli.main(["notify-last"]) == 0
