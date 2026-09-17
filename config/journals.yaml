@@ -1,0 +1,72 @@
+- key: asq
+  name: Administrative Science Quarterly
+  aliases: ["ASQ"]
+  publisher: SAGE
+  direct_urls: ["https://business.cornell.edu/insights/asq/"]
+  search_hints: ["site:journals.sagepub.com asq"]
+- key: smj
+  name: Strategic Management Journal
+  aliases: ["SMJ"]
+  publisher: Wiley / Strategic Management Society
+  direct_urls: []
+  search_hints: ["site:strategicmanagement.net", "site:onlinelibrary.wiley.com 10970266"]
+- key: sej
+  name: Strategic Entrepreneurship Journal
+  aliases: ["SEJ"]
+  publisher: Wiley / Strategic Management Society
+  direct_urls: []
+  search_hints: ["site:strategicmanagement.net", "site:onlinelibrary.wiley.com 19321network"]
+- key: os
+  name: Organization Science
+  aliases: ["OrgSci", "Org Science", "ORSC"]
+  publisher: INFORMS
+  direct_urls: []
+  search_hints: ["site:pubsonline.informs.org orsc"]
+- key: amj
+  name: Academy of Management Journal
+  aliases: ["AMJ", "special research forum"]
+  publisher: Academy of Management
+  direct_urls: []
+  search_hints: ["site:aom.org", "site:journals.aom.org amj"]
+- key: ms
+  name: Management Science
+  aliases: ["MS", "Mgmt Sci", "MNSC"]
+  publisher: INFORMS
+  direct_urls: []
+  search_hints: ["site:pubsonline.informs.org mnsc"]
+- key: jom
+  name: Journal of Management
+  aliases: ["JOM", "JoM"]
+  publisher: SAGE / Southern Management Association
+  direct_urls: ["https://southernmanagement.org/journal/"]
+  search_hints: ["site:journals.sagepub.com jom"]
+- key: jms
+  name: Journal of Management Studies
+  aliases: ["JMS"]
+  publisher: Wiley / Society for the Advancement of Management Studies
+  direct_urls: []
+  search_hints: ["site:socadms.org.uk", "site:onlinelibrary.wiley.com 14676486"]
+- key: stsc
+  name: Strategy Science
+  aliases: ["StratSci", "STSC"]
+  publisher: INFORMS
+  direct_urls: []
+  search_hints: ["site:pubsonline.informs.org stsc"]
+- key: oss
+  name: Organization Studies
+  aliases: ["OrgStud", "Org Studies", "EGOS journal"]
+  publisher: SAGE / EGOS
+  direct_urls: ["https://www.egos.org/"]
+  search_hints: ["site:egos.org", "site:journals.sagepub.com oss"]
+- key: jibs
+  name: Journal of International Business Studies
+  aliases: ["JIBS"]
+  publisher: Springer / Academy of International Business
+  direct_urls: []
+  search_hints: ["site:link.springer.com 41267", "site:aib.world"]
+- key: rp
+  name: Research Policy
+  aliases: ["RP", "Res Policy"]
+  publisher: Elsevier
+  direct_urls: ["https://www.sciencedirect.com/journal/research-policy/about/call-for-papers"]
+  search_hints: ["site:sciencedirect.com research-policy"]
