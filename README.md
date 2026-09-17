@@ -20,7 +20,11 @@ call — this just parses, merges into `data/calls.json`, and rebuilds
 That push — specifically, a change to `data/last_delta.json` — triggers a
 GitHub Actions job (`.github/workflows/notify.yml`) that only sends the
 email digest, via `python -m cfpwatch notify-last`. It never touches the
-Anthropic API.
+Anthropic API. Note that `notify-last` doesn't mark the digest as sent,
+so manually re-running or re-dispatching that workflow re-sends the same
+last digest rather than being a no-op — the job's `concurrency` group
+only prevents two *overlapping* runs from both emailing at once, it
+doesn't make a later, separate re-run idempotent.
 
 The old API-based `cfpwatch run` command still exists for optional local
 use (see below), but nothing scheduled calls it anymore.

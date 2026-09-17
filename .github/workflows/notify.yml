@@ -14,6 +14,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: cfp-watch-notify
+  cancel-in-progress: false
+
 jobs:
   notify:
     runs-on: ubuntu-latest
