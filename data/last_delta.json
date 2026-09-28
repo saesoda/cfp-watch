@@ -1,18 +1,15 @@
 {
-  "date": "2026-09-21",
+  "date": "2026-09-28",
   "new": [
-    "jibs:7d1b472b",
-    "jom:a8b55e00",
-    "os:3d240c7a",
-    "oss:d0760c27",
-    "oss:586e5277",
-    "rp:698679ff",
-    "rp:b0f79bf4",
-    "sej:e7be9657",
-    "sej:1b2e57ad",
-    "stsc:8cb17a7a"
+    "jms:c5e98841",
+    "sej:cfdef79e"
   ],
-  "changed": [],
+  "changed": [
+    [
+      "jom:a8b55e00",
+      null
+    ]
+  ],
   "expired": [],
   "errors": {}
 }
