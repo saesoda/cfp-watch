@@ -1,15 +1,10 @@
 {
-  "date": "2026-09-28",
-  "new": [
-    "jms:c5e98841",
-    "sej:cfdef79e"
+  "date": "2026-10-05",
+  "new": [],
+  "changed": [],
+  "expired": [
+    "jms:8263bb0c",
+    "oss:fe1d3154"
   ],
-  "changed": [
-    [
-      "jom:a8b55e00",
-      null
-    ]
-  ],
-  "expired": [],
   "errors": {}
 }

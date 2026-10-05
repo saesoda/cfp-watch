@@ -12,13 +12,13 @@
       ],
       "opens": "2026-11-16",
       "deadline": "2026-11-30",
-      "deadline_text": "2026-11-30",
-      "url": "https://link.springer.com/collections/fbcifgfdga",
-      "source_url": "https://link.springer.com/journal/41267/collections",
-      "summary": "JIBS special issue soliciting conceptual, empirical (quantitative and qualitative), multilevel, and mixed-method papers (excluding reviews) integrating HRM and organizational behavior insights into international business microfoundations research. Submission window November 16-30, 2026 via the JIBS submission system.",
+      "deadline_text": "Submission window November 16-30, 2026",
+      "url": "https://im.aom.org/discussion/call-for-papers-jibs-abs4-ft50-utd24-microfoundations-of-ib",
+      "source_url": "https://im.aom.org/discussion/call-for-papers-jibs-abs4-ft50-utd24-microfoundations-of-ib",
+      "summary": "Special issue of Journal of International Business Studies seeking conceptual, empirical, multilevel, and mixed-method papers connecting micro-level HRM/OB phenomena (behavior, cognition, emotion, decision-making) with macro-level international business outcomes. Supervising editors Herman Aguinis and Pawan Budhwar.",
       "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-10-05",
       "status": "open",
       "misses": 0,
       "id": "jibs:666eb08c"
@@ -37,7 +37,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jibs:7d1b472b"
     },
     {
@@ -58,8 +58,8 @@
       "confidence": "high",
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
-      "status": "open",
-      "misses": 0,
+      "status": "expired",
+      "misses": 1,
       "id": "jms:8263bb0c"
     },
     {
@@ -76,7 +76,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jms:c5e98841"
     },
     {
@@ -91,12 +91,12 @@
       "opens": null,
       "deadline": "2027-02-28",
       "deadline_text": "2027-02-28",
-      "url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-board-dynamics-in-complex-times/",
-      "source_url": "http://www.socadms.org.uk/special-issue-call-for-papers-board-dynamics-in-complex-times/",
-      "summary": "JMS special issue on social, behavioural, and cognitive dynamics within corporate boardrooms and their influence on organizational culture, strategic direction, and performance; welcomes methodological pluralism (survey, archival, qualitative, conceptual). Submission deadline 28 February 2027.",
-      "confidence": "high",
+      "url": "https://journalofmanagementstudies.ac.uk/?p=2884",
+      "source_url": "https://journalofmanagementstudies.ac.uk/?p=2884",
+      "summary": "Special issue of Journal of Management Studies inviting research on behavioral, cognitive, and relational dynamics of corporate boards, including board decision-making, power dynamics, and board interfaces with internal/external actors.",
+      "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-10-05",
       "status": "open",
       "misses": 0,
       "id": "jms:ce18ba38"
@@ -120,7 +120,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jms:f36b11e3"
     },
     {
@@ -140,7 +140,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jom:a8b55e00"
     },
     {
@@ -165,7 +165,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "os:3d240c7a"
     },
     {
@@ -190,8 +190,8 @@
       "confidence": "low",
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
-      "status": "open",
-      "misses": 2,
+      "status": "stale",
+      "misses": 3,
       "id": "os:e01fff33"
     },
     {
@@ -216,7 +216,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "os:fb886fd9"
     },
     {
@@ -233,7 +233,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:586e5277"
     },
     {
@@ -250,7 +250,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:8ef16a97"
     },
     {
@@ -273,7 +273,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:cb10d3b8"
     },
     {
@@ -290,7 +290,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:d0760c27"
     },
     {
@@ -306,8 +306,8 @@
       "confidence": "high",
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
-      "status": "open",
-      "misses": 0,
+      "status": "expired",
+      "misses": 1,
       "id": "oss:fe1d3154"
     },
     {
@@ -328,7 +328,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "rp:698679ff"
     },
     {
@@ -352,7 +352,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "rp:6dcd89fc"
     },
     {
@@ -375,7 +375,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "rp:b0f79bf4"
     },
     {
@@ -392,7 +392,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "sej:1b2e57ad"
     },
     {
@@ -415,7 +415,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "sej:ac266eac"
     },
     {
@@ -432,7 +432,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "sej:cfdef79e"
     },
     {
@@ -455,7 +455,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "sej:e7be9657"
     },
     {
@@ -478,7 +478,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "sej:ea9e0670"
     },
     {
@@ -493,13 +493,13 @@
       ],
       "opens": null,
       "deadline": "2026-11-15",
-      "deadline_text": "Proposal submissions (3-4 pages) due November 15, 2026; editors give feedback by December 15, 2026; strongest proposals invited to submit full papers by April 15, 2027, followed by a spring author workshop",
+      "deadline_text": "Proposal deadline November 15, 2026",
       "url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
       "source_url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
-      "summary": "Strategy Science special issue call for paper proposals on methods for addressing strategy's core (particular/idiosyncratic) questions, advised by Todd Zenger; proposals should be submitted via the regular Strategy Science portal flagged for this special issue, with the strongest proposals invited to submit full papers for standard peer review.",
+      "summary": "Special issue of Strategy Science seeking paper proposals on how strategy research can better address particular, firm-specific problems and situations, with Todd Zenger serving as advisor.",
       "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-10-05",
       "status": "open",
       "misses": 0,
       "id": "stsc:8cb17a7a"
@@ -524,69 +524,69 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "stsc:f5ba31d4"
     }
   ],
   "journals": {
     "amj": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "asq": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "jibs": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "jms": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "jom": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "ms": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "os": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "oss": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "rp": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "sej": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "smj": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     },
     "stsc": {
-      "last_run": "2026-09-28",
-      "last_ok": "2026-09-28",
+      "last_run": "2026-10-05",
+      "last_ok": "2026-10-05",
       "last_error": null
     }
   }
