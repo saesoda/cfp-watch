@@ -1,10 +1,11 @@
 {
-  "date": "2026-10-05",
-  "new": [],
-  "changed": [],
-  "expired": [
-    "jms:8263bb0c",
-    "oss:fe1d3154"
+  "date": "2026-10-12",
+  "new": [
+    "jibs:78447196",
+    "jom:b4c53306",
+    "os:9060fa10"
   ],
+  "changed": [],
+  "expired": [],
   "errors": {}
 }
