@@ -20,7 +20,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-05",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "jibs:666eb08c"
     },
     {
@@ -35,13 +35,13 @@
       ],
       "opens": "2026-11-16",
       "deadline": "2026-11-30",
-      "deadline_text": "Sources vary slightly: AOM reposts give a submission window of November 16-30, 2026, via the JIBS submission system; another repost states the deadline as November 30, 2026. Supervising editors: Herman Aguinis, Pawan Budhwar.",
+      "deadline_text": "2026-11-30",
       "url": "https://palgrave.com/gp/journal/41267/authors/call-for-papers-and-proposals",
-      "source_url": "https://ent.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business-1",
-      "summary": "Special issue of Journal of International Business Studies inviting conceptual, empirical (quantitative and qualitative), multilevel, and mixed-method papers (excluding review papers) at the intersection of HRM/organizational behavior and international business microfoundations.",
+      "source_url": "https://ent.aom.org/discussion/call-for-papers-jibs-ft50-utd24-special-issue-microfoundations-of-ib",
+      "summary": "A Journal of International Business Studies special issue seeking conceptual, empirical (quantitative and qualitative), multilevel, and mixed-method papers that link micro-level behavior, cognition, emotion, and decision-making to macro-level international business outcomes; review papers excluded. Supervising editors: Herman Aguinis and Pawan Budhwar. Submission window is reported as 16-30 November 2026 via the JIBS submission system.",
       "confidence": "medium",
       "first_seen": "2026-10-12",
-      "last_seen": "2026-10-12",
+      "last_seen": "2026-10-19",
       "status": "open",
       "misses": 0,
       "id": "jibs:78447196"
@@ -60,7 +60,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "jibs:7d1b472b"
     },
     {
@@ -99,7 +99,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "jms:c5e98841"
     },
     {
@@ -116,10 +116,10 @@
       "deadline_text": "2027-02-28",
       "url": "https://journalofmanagementstudies.ac.uk/?p=2884",
       "source_url": "https://journalofmanagementstudies.ac.uk/?p=2884",
-      "summary": "Special issue of Journal of Management Studies inviting research into the behavioural, cognitive, and relational dynamics of board decision-making and governance, in light of geopolitical tensions, technological disruption, and social/environmental demands. JMS editor: Dimitrios Georgakakis.",
+      "summary": "Journal of Management Studies special issue on board internal processes, inviting qualitative, quantitative, and conceptual research that opens the 'black box' of boardroom behavioural, cognitive, and relational dynamics (e.g., board-chair roles, conflict/collaboration, interpersonal power among directors). Submission deadline is 28 February 2027; JMS handling editor is Dimitrios Georgakakis.",
       "confidence": "high",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-12",
+      "last_seen": "2026-10-19",
       "status": "open",
       "misses": 0,
       "id": "jms:ce18ba38"
@@ -143,7 +143,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "jms:f36b11e3"
     },
     {
@@ -155,13 +155,13 @@
       ],
       "opens": "2027-01-01",
       "deadline": "2027-01-15",
-      "deadline_text": "No specific date found in search results.",
+      "deadline_text": "2027-01-15",
       "url": "https://journals.sagepub.com/home/jom",
-      "source_url": "https://journals.sagepub.com/home/jom",
-      "summary": "A standing call listed on the Journal of Management homepage inviting qualitative-research proposals; no further detail found via search.",
-      "confidence": "low",
+      "source_url": "https://omt.aom.org/discussion/special-call-qualitative-research-proposals",
+      "summary": "Journal of Management's recurring special call inviting proposals (not full papers) for qualitative research papers; the submission window runs January 1-15, 2027 (11:59pm EST) via ManuscriptCentral, with notifications expected around March 15, 2027. This is a repeat of an earlier 2024/2025 cycle edited by Tima Bansal and Kevin Corley; guest editors for this 2027 cycle could not be confirmed.",
+      "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-10-12",
+      "last_seen": "2026-10-19",
       "status": "open",
       "misses": 0,
       "id": "jom:a8b55e00"
@@ -180,32 +180,33 @@
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-12",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jom:b4c53306"
     },
     {
       "journal": "os",
       "title": "AI-Enabled Frontiers in Organizational Science",
       "guest_editors": [
-        "Paul Leonardi",
-        "Alex Murray",
-        "Frank Nagle",
-        "Nelson Phillips",
-        "Juliana Schroeder",
-        "Paula Ungureanu",
-        "Elisa Villani"
+        "Claudine Gartenberg",
+        "Sharique Hasan",
+        "Lamar Pierce",
+        "Christopher Bail",
+        "Hengchen Dai",
+        "Oliver Hauser",
+        "Hatim Rahman",
+        "Dennis Zhang"
       ],
       "opens": "2026-10-01",
       "deadline": "2026-11-01",
-      "deadline_text": "2026-11-01",
+      "deadline_text": "Stage 1 proposal deadline November 1, 2026; portal opened October 1, 2026; selected projects to be notified around January 10, 2027, with a tentative in-person workshop in February 2027",
       "url": "https://pubsonline.informs.org/pb-assets/filesorsc/CFP_AI-Enabled%20Frontiers%20in%20Organizational%20Science-1785685920943.pdf",
-      "source_url": "https://pubsonline.informs.org/page/orsc/calls-for-papers",
-      "summary": "Special issue asking whether AI should produce faster/cheaper versions of existing research or fundamentally new science; seeks AI-enabled research loops, reusable research infrastructure, new measurement, and synthetic social systems via a three-stage proposal-workshop-finalization process. Submission window is October 1 - November 1, 2026.",
-      "confidence": "high",
+      "source_url": "https://pubsonline.informs.org/pb-assets/filesorsc/CFP_AI-Enabled%20Frontiers%20in%20Organizational%20Science-1785685920943.pdf",
+      "summary": "A special issue of Organization Science inviting short Stage 1 proposals (roughly 3-5 pages) on how AI can expand the production of organizational and social-science knowledge, rather than simply increase paper output; submissions go through the ORSC ScholarOne/Manuscript Central portal under the 'Special Issue: AI-Enabled Frontiers' option.",
+      "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 2,
+      "misses": 0,
       "id": "os:3d240c7a"
     },
     {
@@ -231,7 +232,7 @@
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-12",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "os:9060fa10"
     },
     {
@@ -282,7 +283,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "os:fb886fd9"
     },
     {
@@ -299,7 +300,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "oss:586e5277"
     },
     {
@@ -316,7 +317,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "oss:8ef16a97"
     },
     {
@@ -339,7 +340,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "oss:cb10d3b8"
     },
     {
@@ -349,17 +350,18 @@
         "Gry Espedal",
         "Gerardo Patriotta",
         "Madeleine Rauch",
-        "Trish Reay"
+        "Trish Reay",
+        "Maxim Voronov (Senior Editor)"
       ],
       "opens": null,
       "deadline": "2027-09-30",
       "deadline_text": "2027-09-30",
-      "url": "https://journals.sagepub.com/page/oss/call-for-papers",
+      "url": "https://journals.sagepub.com/home/oss",
       "source_url": "https://il.linkedin.com/in/tammarbzilber",
-      "summary": "Special issue of Organization Studies examining how emotions, values, and institutions interact during major disruptions (crises, conflicts, natural disasters, new technologies such as AI), and how these challenge taken-for-granted values and reshape engagement with institutions. Senior Editor: Maxim Voronov.",
+      "summary": "A special issue of Organization Studies examining how emotions, values, and institutions interact during periods of profound disruption, welcoming a wide range of theoretical, empirical, and methodological approaches.",
       "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-10-12",
+      "last_seen": "2026-10-19",
       "status": "open",
       "misses": 0,
       "id": "oss:d0760c27"
@@ -399,7 +401,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 3,
+      "misses": 4,
       "id": "rp:698679ff"
     },
     {
@@ -423,7 +425,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "rp:6dcd89fc"
     },
     {
@@ -446,7 +448,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 3,
+      "misses": 4,
       "id": "rp:b0f79bf4"
     },
     {
@@ -486,8 +488,55 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "sej:ac266eac"
+    },
+    {
+      "journal": "sej",
+      "title": "Mobilizing, Organizing, and Exploiting Entrepreneurial Judgment within Ecosystems",
+      "guest_editors": [
+        "David B. Audretsch",
+        "Maksim Belitski",
+        "Rosa Caiazza",
+        "Nicolai J. Foss",
+        "Donald Siegel"
+      ],
+      "opens": "2027-01-01",
+      "deadline": "2027-03-01",
+      "deadline_text": "2027-03-01",
+      "url": "https://sms.onlinelibrary.wiley.com/hub/call-for-papers/smj-judgment-ecosystems",
+      "source_url": "https://www.strategicmanagement.net/publications-resources/sms-journals/strategic-entrepreneurship-journal/sej-special-issues/",
+      "summary": "SEJ special issue (supervising co-editor Peter Klein) on how entrepreneurial judgment is mobilized, organized, and exploited within entrepreneurial ecosystems; submission window opens Jan 1, 2027 with a March 1, 2027 deadline, anticipated publication Winter 2028.",
+      "confidence": "medium",
+      "first_seen": "2026-10-19",
+      "last_seen": "2026-10-19",
+      "status": "open",
+      "misses": 0,
+      "id": "sej:ae9fa985"
+    },
+    {
+      "journal": "sej",
+      "title": "Entrepreneurial Ecosystems in Emerging Economies",
+      "guest_editors": [
+        "Ioana Stefan",
+        "Ikenna Uzuegbunam",
+        "Brett Anitra Gilbert",
+        "Wim Vanhaverbeke",
+        "Kadigia Faccin",
+        "Yanbo Wang"
+      ],
+      "opens": null,
+      "deadline": "2027-04-30",
+      "deadline_text": "2027-04-30",
+      "url": "https://sms.onlinelibrary.wiley.com/hub/call-for-papers/sej-entrepreneurial-ecosystems",
+      "source_url": "https://www.strategicmanagement.net/publications-resources/sms-journals/strategic-entrepreneurship-journal/sej-special-issues/",
+      "summary": "SEJ special issue (supervising co-editor David Sirmon) seeking research on entrepreneurial ecosystems in emerging/Global South economies, including digitalization's effects on ecosystems; submission deadline April 30, 2027, anticipated publication Spring 2029.",
+      "confidence": "medium",
+      "first_seen": "2026-10-19",
+      "last_seen": "2026-10-19",
+      "status": "open",
+      "misses": 0,
+      "id": "sej:ba51a5de"
     },
     {
       "journal": "sej",
@@ -503,7 +552,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "sej:cfdef79e"
     },
     {
@@ -526,7 +575,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 3,
+      "misses": 4,
       "id": "sej:e7be9657"
     },
     {
@@ -544,12 +593,12 @@
       "deadline_text": "2027-03-31",
       "url": "https://www.bam.ac.uk/resource/sej-special-issue-call-for-papers.html",
       "source_url": "https://www.bam.ac.uk/resource/sej-special-issue-call-for-papers.html",
-      "summary": "Special issue of Strategic Entrepreneurship Journal inviting research on international entrepreneurship amid persistent global disruption; a paper development workshop for revise-and-resubmit manuscripts is planned online with dates TBA. SEJ Supervising Co-Editor is Yong Li (University of Nevada, Las Vegas). Submission deadline March 31, 2027.",
+      "summary": "SEJ special issue (SEJ Co-Editor Yong Li) framing global disruption (socioeconomic, geopolitical, technological, business shocks) as both a threat and an opportunity context for international entrepreneurship research; submission deadline March 31, 2027.",
       "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 2,
+      "misses": 0,
       "id": "sej:ea9e0670"
     },
     {
@@ -564,13 +613,13 @@
       ],
       "opens": null,
       "deadline": "2026-11-15",
-      "deadline_text": "Proposal deadline November 15, 2026 (this is a call for special-issue PROPOSALS, not final paper submissions). Todd Zenger listed as advisor.",
+      "deadline_text": "2026-11-15",
       "url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
       "source_url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
-      "summary": "Strategy Science call for special-issue proposals arguing strategy research should give more weight to guidance for particular firms/situations rather than prizing confident general answers over the strategic importance of the questions asked.",
-      "confidence": "high",
+      "summary": "Strategy Science special issue call on methods for strategy's core questions, with Todd Zenger as advisor. Short (3-4 page) proposals are due November 15, 2026; editors give feedback by December 15, 2026; proposals invited to develop into full papers are due April 15, 2027, with a spring author workshop planned for selected proposals.",
+      "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-10-12",
+      "last_seen": "2026-10-19",
       "status": "open",
       "misses": 0,
       "id": "stsc:8cb17a7a"
@@ -595,69 +644,69 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "stsc:f5ba31d4"
     }
   ],
   "journals": {
     "amj": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "asq": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "jibs": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "jms": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "jom": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "ms": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "os": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "oss": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "rp": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "sej": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "smj": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     },
     "stsc": {
-      "last_run": "2026-10-12",
-      "last_ok": "2026-10-12",
+      "last_run": "2026-10-19",
+      "last_ok": "2026-10-19",
       "last_error": null
     }
   }
