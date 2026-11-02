@@ -20,7 +20,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-05",
       "status": "open",
-      "misses": 3,
+      "misses": 4,
       "id": "jibs:666eb08c"
     },
     {
@@ -35,13 +35,13 @@
       ],
       "opens": "2026-11-16",
       "deadline": "2026-11-30",
-      "deadline_text": "Submission window November 16-30, 2026",
-      "url": "https://palgrave.com/gp/journal/41267/authors/call-for-papers-and-proposals",
-      "source_url": "https://ent.aom.org/discussion/call-for-papers-jibs-ft50-utd24-special-issue-microfoundations-of-ib",
-      "summary": "JIBS special issue seeking conceptual, empirical, multilevel, and mixed-method papers linking micro-level behavior, cognition, and decision-making to international business outcomes, supervised by editors Herman Aguinis and Pawan Budhwar.",
+      "deadline_text": "2026-11-30",
+      "url": "https://ent.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business-1",
+      "source_url": "https://ent.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business-1",
+      "summary": "JIBS special issue linking micro-level behavior, cognition, and emotion to macro-level international business outcomes; submission window 16-30 November 2026 via the JIBS system. Supervising editors Herman Aguinis and Pawan Budhwar.",
       "confidence": "medium",
       "first_seen": "2026-10-12",
-      "last_seen": "2026-10-26",
+      "last_seen": "2026-11-02",
       "status": "open",
       "misses": 0,
       "id": "jibs:78447196"
@@ -60,7 +60,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "jibs:7d1b472b"
     },
     {
@@ -99,27 +99,24 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "jms:c5e98841"
     },
     {
       "journal": "jms",
       "title": "Board Dynamics in Complex Times",
       "guest_editors": [
-        "Svetlana Khapova",
-        "Ryan Krause",
-        "Michael C. Withers",
         "Alessandro Zattoni"
       ],
       "opens": null,
       "deadline": "2027-02-28",
       "deadline_text": "2027-02-28",
       "url": "https://journalofmanagementstudies.ac.uk/?p=2884",
-      "source_url": "https://journalofmanagementstudies.ac.uk/?p=2884",
-      "summary": "JMS special issue call for papers on the behavioural, cognitive, and relational dynamics driving board decision-making and governance outcomes; JMS Editor Dimitrios Georgakakis.",
+      "source_url": "https://omt.aom.org/discussion/jms-special-issue-call-for-papers-board-dynamics-in-complex-times-2",
+      "summary": "Journal of Management Studies special issue on boardroom dynamics (board-CEO relationships, chair's role, conflict/collaboration, decision-making); literature reviews not considered. Submission deadline 28 February 2027.",
       "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-26",
+      "last_seen": "2026-11-02",
       "status": "open",
       "misses": 0,
       "id": "jms:ce18ba38"
@@ -143,7 +140,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "jms:f36b11e3"
     },
     {
@@ -173,12 +170,12 @@
       "opens": "2027-01-01",
       "deadline": "2027-01-15",
       "deadline_text": "2027-01-15",
-      "url": "https://journals.sagepub.com/home/jom",
-      "source_url": "https://journals.sagepub.com/pb-assets/PDF/Special%20Call%20Final%20Version-1713157578.pdf",
-      "summary": "Journal of Management special call inviting short proposals (not full papers) for qualitative research, with proposals accepted Jan 1-15, 2027 and notification by March 15, 2027; selected proposals proceed to regular double-blind review.",
-      "confidence": "medium",
+      "url": "https://smgmt.org/call/",
+      "source_url": "https://omt.aom.org/discussion/special-call-qualitative-research-proposals",
+      "summary": "Journal of Management (SAGE/Southern Management Association) special call (not a themed special issue) for qualitative research proposals; current round proposal deadline is January 15, 2027, with full papers due March 15, 2028 for selected authors.",
+      "confidence": "low",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-10-26",
+      "last_seen": "2026-11-02",
       "status": "open",
       "misses": 0,
       "id": "jom:a8b55e00"
@@ -197,7 +194,7 @@
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jom:b4c53306"
     },
     {
@@ -222,8 +219,8 @@
       "confidence": "medium",
       "first_seen": "2026-09-21",
       "last_seen": "2026-10-26",
-      "status": "open",
-      "misses": 0,
+      "status": "expired",
+      "misses": 1,
       "id": "os:3d240c7a"
     },
     {
@@ -248,8 +245,8 @@
       "confidence": "high",
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-12",
-      "status": "open",
-      "misses": 2,
+      "status": "expired",
+      "misses": 3,
       "id": "os:9060fa10"
     },
     {
@@ -300,7 +297,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "os:fb886fd9"
     },
     {
@@ -310,14 +307,14 @@
       "opens": null,
       "deadline": "2028-01-31",
       "deadline_text": "2028-01-31",
-      "url": "https://journals.sagepub.com/page/oss/call-for-papers",
-      "source_url": "https://journals.sagepub.com/page/oss/call-for-papers",
-      "summary": "Special issue call for Organization Studies inviting qualitative 'restudies' of established theories or empirical sites to retheorize organizational phenomena; listed on SAGE's Organization Studies calls-for-papers page.",
-      "confidence": "medium",
+      "url": "https://genderequalitygoals.blogspot.com/2026/05/qualitative-restudies-retheorizing-in.html",
+      "source_url": "https://genderequalitygoals.blogspot.com/2026/05/qualitative-restudies-retheorizing-in.html",
+      "summary": "Special issue of Organization Studies inviting qualitative restudies/retheorizing papers (conceptual/review papers excluded); submission deadline 31 January 2028 per a reposted call-for-papers blog.",
+      "confidence": "low",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-11-02",
       "status": "open",
-      "misses": 4,
+      "misses": 0,
       "id": "oss:586e5277"
     },
     {
@@ -339,7 +336,7 @@
       "first_seen": "2026-10-26",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:6465bda6"
     },
     {
@@ -349,12 +346,12 @@
       "opens": null,
       "deadline": "2027-04-30",
       "deadline_text": "2027-04-30",
-      "url": "https://journals.sagepub.com/page/oss/call-for-papers",
+      "url": "https://journals.sagepub.com/special-issue-calls-for-papers",
       "source_url": "https://journals.sagepub.com/special-issue-calls-for-papers",
-      "summary": "Special issue of Organization Studies on applying systems perspectives to social-ecological challenges in organizing; only found via a cross-journal SAGE calls-for-papers index, not independently cross-verified.",
-      "confidence": "low",
+      "summary": "Special issue of Organization Studies on systems perspectives for social-ecological challenges; submission deadline 30 April 2027, per SAGE's aggregated special-issue calls page.",
+      "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-26",
+      "last_seen": "2026-11-02",
       "status": "open",
       "misses": 0,
       "id": "oss:8ef16a97"
@@ -379,7 +376,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:cb10d3b8"
     },
     {
@@ -402,7 +399,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "oss:d0760c27"
     },
     {
@@ -440,7 +437,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "rp:698679ff"
     },
     {
@@ -464,7 +461,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "rp:6dcd89fc"
     },
     {
@@ -487,7 +484,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "rp:b0f79bf4"
     },
     {
@@ -527,7 +524,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "sej:ac266eac"
     },
     {
@@ -550,7 +547,7 @@
       "first_seen": "2026-10-19",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "sej:ae9fa985"
     },
     {
@@ -574,7 +571,7 @@
       "first_seen": "2026-10-19",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "sej:ba51a5de"
     },
     {
@@ -591,7 +588,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "sej:cfdef79e"
     },
     {
@@ -614,7 +611,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "sej:e7be9657"
     },
     {
@@ -637,7 +634,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "sej:ea9e0670"
     },
     {
@@ -655,10 +652,10 @@
       "deadline_text": "2026-11-15",
       "url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
       "source_url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
-      "summary": "Strategy Science special issue call for paper proposals on methods for generating generalizable, rigorous guidance for firm-specific strategic decisions (experiments, formal/computational models, case and comparative-historical work, AI-enabled tools). Proposal deadline November 15, 2026. Todd Zenger listed as advisor.",
+      "summary": "Strategy Science (INFORMS) special issue call for proposals on research methods for strategy's core questions (research designs, formal/computational models, case/comparative-historical work, field experiments). Todd Zenger serves as advisor. Proposal deadline November 15, 2026 (submitted via the regular Strategy Science portal, flagged for the special issue); an author workshop for selected proposals is planned for spring.",
       "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-10-26",
+      "last_seen": "2026-11-02",
       "status": "open",
       "misses": 0,
       "id": "stsc:8cb17a7a"
@@ -683,69 +680,69 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "stsc:f5ba31d4"
     }
   ],
   "journals": {
     "amj": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "asq": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "jibs": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "jms": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "jom": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "ms": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "os": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "oss": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "rp": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "sej": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "smj": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     },
     "stsc": {
-      "last_run": "2026-10-26",
-      "last_ok": "2026-10-26",
+      "last_run": "2026-11-02",
+      "last_ok": "2026-11-02",
       "last_error": null
     }
   }

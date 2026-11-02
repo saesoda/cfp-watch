@@ -1,9 +1,10 @@
 {
-  "date": "2026-10-26",
-  "new": [
-    "oss:6465bda6"
-  ],
+  "date": "2026-11-02",
+  "new": [],
   "changed": [],
-  "expired": [],
+  "expired": [
+    "os:3d240c7a",
+    "os:9060fa10"
+  ],
   "errors": {}
 }
