@@ -20,7 +20,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-05",
       "status": "open",
-      "misses": 4,
+      "misses": 5,
       "id": "jibs:666eb08c"
     },
     {
@@ -35,13 +35,13 @@
       ],
       "opens": "2026-11-16",
       "deadline": "2026-11-30",
-      "deadline_text": "2026-11-30",
+      "deadline_text": "Submission window 16-30 November 2026 via the JIBS submission system",
       "url": "https://ent.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business-1",
-      "source_url": "https://ent.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business-1",
-      "summary": "JIBS special issue linking micro-level behavior, cognition, and emotion to macro-level international business outcomes; submission window 16-30 November 2026 via the JIBS system. Supervising editors Herman Aguinis and Pawan Budhwar.",
+      "source_url": "https://hr.aom.org/discussion/cfp-jibs-utd24ft50abs4ssci-hrm-ob-microfoundations-of-international-business",
+      "summary": "JIBS special issue seeking conceptual, empirical (quantitative/qualitative), multilevel and mixed-method papers linking micro-level behavior, cognition, emotion and decision-making to macro-level international business outcomes. Supervising editors Herman Aguinis and Pawan Budhwar.",
       "confidence": "medium",
       "first_seen": "2026-10-12",
-      "last_seen": "2026-11-02",
+      "last_seen": "2026-11-09",
       "status": "open",
       "misses": 0,
       "id": "jibs:78447196"
@@ -60,8 +60,42 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "jibs:7d1b472b"
+    },
+    {
+      "journal": "jms",
+      "title": "Corporate Transactions in the Age of AI: Digital Infrastructures, Strategic Processes, and Market Dynamics",
+      "guest_editors": [],
+      "opens": null,
+      "deadline": "2027-06-01",
+      "deadline_text": "Submission deadline: 1 June 2027",
+      "url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-corporate-transactions-in-the-age-of-ai-digital-infrastructures-strategic-processes-and-market-dynamics/",
+      "source_url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-corporate-transactions-in-the-age-of-ai-digital-infrastructures-strategic-processes-and-market-dynamics/",
+      "summary": "JMS special issue on how AI and digital infrastructures reshape the organizational processes around corporate transactions (M&A, deal evaluation, market reactions). Literature reviews excluded; guest editors not identified in search snippets.",
+      "confidence": "medium",
+      "first_seen": "2026-11-09",
+      "last_seen": "2026-11-09",
+      "status": "open",
+      "misses": 0,
+      "id": "jms:0646f2bf"
+    },
+    {
+      "journal": "jms",
+      "title": "Truth and Organizations in the Age of Polarization",
+      "guest_editors": [],
+      "opens": null,
+      "deadline": "2027-05-03",
+      "deadline_text": "Submission deadline: 3 May 2027",
+      "url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-truth-and-organizations-in-the-age-of-polarization/",
+      "source_url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-truth-and-organizations-in-the-age-of-polarization/",
+      "summary": "JMS special issue, building on the 2026 JMS Cambridge conference, examining how organizations establish credibility and how stakeholders decide what to believe amid polarization. Guest editors affiliated with King's College London, University of York, Rotterdam School of Management, University of Bath, and University of Lausanne (individual names not confirmed from search snippets).",
+      "confidence": "medium",
+      "first_seen": "2026-11-09",
+      "last_seen": "2026-11-09",
+      "status": "open",
+      "misses": 0,
+      "id": "jms:358c0a66"
     },
     {
       "journal": "jms",
@@ -88,35 +122,40 @@
     {
       "journal": "jms",
       "title": "Organizational Practices for Equality, Diversity, and Inclusion in Institutionally Contested Times",
-      "guest_editors": [],
+      "guest_editors": [
+        "Eddy Ng"
+      ],
       "opens": "2027-03-15",
       "deadline": "2027-03-31",
-      "deadline_text": "2027-03-31",
+      "deadline_text": "Submission window: 15-31 March 2027",
       "url": "https://journalofmanagementstudies.ac.uk/special-issue-call-for-papers-organizational-practices-for-equality-diversity-and-inclusion-in-institutionally-contested-times/",
-      "source_url": "https://sim.aom.org/simthrive/discussion/call-for-papers-journal-of-management-studies-special-issue-organizational-practices-for-equality-diversity-and-inclusion-in-institutionally-contested-times",
-      "summary": "JMS special issue on organizational EDI practices amid institutionally contested times; includes a virtual pre-submission information session on 1 October 2026 and a submission window of 15-31 March 2027, with a post-submission PDW at University of Palermo in October 2027. Guest editor names were not found in available sources.",
+      "source_url": "https://sim.aom.org/discussion/call-for-papers-journal-of-management-studies-special-issue-organizational-practices-for-equality-diversity-and-inclusion-in-institutionally-contested-times",
+      "summary": "JMS special issue examining EDI as a contested domain shaped by retrenchment, reversal, symbolic relabeling, and compliance-driven redesign. Pre-submission workshop 1 Oct 2026 (registration by 25 Sept 2026, now closed). Sources disagree on the full guest-editor list: the JMS page lists Eddy Ng and Tiffany Trzebiatowski; an AOM posting lists Ng, Pasquale Massimo Picone, Yi-Ren Wang, and Cristina Leone as guest editors with Trzebiatowski as the JMS handling editor. Only Ng is consistent across sources.",
       "confidence": "medium",
       "first_seen": "2026-09-28",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-11-09",
       "status": "open",
-      "misses": 5,
+      "misses": 0,
       "id": "jms:c5e98841"
     },
     {
       "journal": "jms",
       "title": "Board Dynamics in Complex Times",
       "guest_editors": [
+        "Svetlana Khapova",
+        "Ryan Krause",
+        "Michael C. Withers",
         "Alessandro Zattoni"
       ],
       "opens": null,
       "deadline": "2027-02-28",
-      "deadline_text": "2027-02-28",
+      "deadline_text": "Submission deadline: 28 February 2027",
       "url": "https://journalofmanagementstudies.ac.uk/?p=2884",
       "source_url": "https://omt.aom.org/discussion/jms-special-issue-call-for-papers-board-dynamics-in-complex-times-2",
-      "summary": "Journal of Management Studies special issue on boardroom dynamics (board-CEO relationships, chair's role, conflict/collaboration, decision-making); literature reviews not considered. Submission deadline 28 February 2027.",
-      "confidence": "medium",
+      "summary": "JMS special issue seeking empirical and theoretical work that opens the 'black box' of boardroom dynamics, including board antecedents, culture, chair leadership style, dissent, and outcomes.",
+      "confidence": "high",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-11-02",
+      "last_seen": "2026-11-09",
       "status": "open",
       "misses": 0,
       "id": "jms:ce18ba38"
@@ -140,7 +179,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "jms:f36b11e3"
     },
     {
@@ -177,7 +216,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-11-02",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "jom:a8b55e00"
     },
     {
@@ -194,7 +233,7 @@
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "jom:b4c53306"
     },
     {
@@ -297,7 +336,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "os:fb886fd9"
     },
     {
@@ -314,7 +353,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-11-02",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:586e5277"
     },
     {
@@ -336,7 +375,7 @@
       "first_seen": "2026-10-26",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "oss:6465bda6"
     },
     {
@@ -353,7 +392,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-11-02",
       "status": "open",
-      "misses": 0,
+      "misses": 1,
       "id": "oss:8ef16a97"
     },
     {
@@ -376,7 +415,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-10-26",
       "status": "open",
-      "misses": 1,
+      "misses": 2,
       "id": "oss:cb10d3b8"
     },
     {
@@ -399,7 +438,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "oss:d0760c27"
     },
     {
@@ -437,7 +476,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "rp:698679ff"
     },
     {
@@ -461,7 +500,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 7,
+      "misses": 8,
       "id": "rp:6dcd89fc"
     },
     {
@@ -484,7 +523,7 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "rp:b0f79bf4"
     },
     {
@@ -524,7 +563,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 7,
+      "misses": 8,
       "id": "sej:ac266eac"
     },
     {
@@ -547,7 +586,7 @@
       "first_seen": "2026-10-19",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "sej:ae9fa985"
     },
     {
@@ -571,7 +610,7 @@
       "first_seen": "2026-10-19",
       "last_seen": "2026-10-19",
       "status": "open",
-      "misses": 2,
+      "misses": 3,
       "id": "sej:ba51a5de"
     },
     {
@@ -588,7 +627,7 @@
       "first_seen": "2026-09-28",
       "last_seen": "2026-09-28",
       "status": "open",
-      "misses": 5,
+      "misses": 6,
       "id": "sej:cfdef79e"
     },
     {
@@ -611,14 +650,14 @@
       "first_seen": "2026-09-21",
       "last_seen": "2026-09-21",
       "status": "open",
-      "misses": 6,
+      "misses": 7,
       "id": "sej:e7be9657"
     },
     {
       "journal": "sej",
       "title": "International Entrepreneurship in an Age of Persistent Disruption",
       "guest_editors": [
-        "Olga Petricevic",
+        "Olga Petričević",
         "Christos N. Pitelis",
         "Stratos Ramoglou",
         "Catherine L. Wang",
@@ -627,14 +666,14 @@
       "opens": null,
       "deadline": "2027-03-31",
       "deadline_text": "2027-03-31",
-      "url": "https://www.bam.ac.uk/resource/sej-special-issue-call-for-papers.html",
+      "url": "https://www.strategicmanagement.net/publications-resources/sms-journals/strategic-entrepreneurship-journal/sej-special-issues/",
       "source_url": "https://www.bam.ac.uk/resource/sej-special-issue-call-for-papers.html",
-      "summary": "SEJ special issue (SEJ Co-Editor Yong Li) framing global disruption (socioeconomic, geopolitical, technological, business shocks) as both a threat and an opportunity context for international entrepreneurship research; submission deadline March 31, 2027.",
+      "summary": "Strategic Entrepreneurship Journal special issue call treating disruption as a persistent, default operating condition (rather than an occasional shock) for international entrepreneurial activity, inviting work on how entrepreneurial judgment, strategies, and organizational forms evolve under persistent turbulence. Yong Li is listed as the SEJ handling co-editor in some listings.",
       "confidence": "medium",
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-19",
+      "last_seen": "2026-11-09",
       "status": "open",
-      "misses": 2,
+      "misses": 0,
       "id": "sej:ea9e0670"
     },
     {
@@ -649,13 +688,13 @@
       ],
       "opens": null,
       "deadline": "2026-11-15",
-      "deadline_text": "2026-11-15",
-      "url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
+      "deadline_text": "Proposal deadline: November 15th, 2026",
+      "url": "https://pubsonline.informs.org/page/stsc/calls-for-papers",
       "source_url": "https://pubsonline.informs.org/pb-assets/filesstsc/2026%20Strategy%20Science%20%E2%80%94%20Call%20for%20Paper%20Proposals-1788199327397.pdf",
-      "summary": "Strategy Science (INFORMS) special issue call for proposals on research methods for strategy's core questions (research designs, formal/computational models, case/comparative-historical work, field experiments). Todd Zenger serves as advisor. Proposal deadline November 15, 2026 (submitted via the regular Strategy Science portal, flagged for the special issue); an author workshop for selected proposals is planned for spring.",
+      "summary": "Strategy Science special issue call for paper proposals (3-4 pages) on new methods for addressing strategy's core questions, balancing generality with particularity; Todd Zenger serves as advisor. Proposal deadline is 6 days from today.",
       "confidence": "medium",
       "first_seen": "2026-09-21",
-      "last_seen": "2026-11-02",
+      "last_seen": "2026-11-09",
       "status": "open",
       "misses": 0,
       "id": "stsc:8cb17a7a"
@@ -680,69 +719,69 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "status": "open",
-      "misses": 7,
+      "misses": 8,
       "id": "stsc:f5ba31d4"
     }
   ],
   "journals": {
     "amj": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "asq": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "jibs": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "jms": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "jom": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "ms": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "os": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "oss": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "rp": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "sej": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "smj": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     },
     "stsc": {
-      "last_run": "2026-11-02",
-      "last_ok": "2026-11-02",
+      "last_run": "2026-11-09",
+      "last_ok": "2026-11-09",
       "last_error": null
     }
   }
